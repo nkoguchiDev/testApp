@@ -1,7 +1,12 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from motor.motor_asyncio import AsyncIOMotorClient
 
 from app.core.config import settings
 
-engine = create_engine(settings.SQLALCHEMY_DATABASE_URI, pool_pre_ping=True)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+client = AsyncIOMotorClient(
+    host={settings.DB_HOST},
+    port={settings.DB_PORT},
+    username={settings.DB_USER},
+    password={settings.DB_PASSWORD},
+    uuidRepresentation="standard"
+)
+db = client[settings.DB_NAME]

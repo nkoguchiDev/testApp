@@ -1,6 +1,10 @@
 from fastapi import FastAPI
+from beanie import init_beanie
+
 from app.api.api_v1.api import api_router
+
 from app.core.config import settings
+from app.db.session import db
 
 app = FastAPI(title=settings.PROJECT_NAME,
               openapi_url=f"{settings.API_V1_STR}/openapi.json")
@@ -21,3 +25,13 @@ app.include_router(api_router, prefix=settings.API_V1_STR)
 @app.get("/health")
 async def root():
     return {"status": "ok"}
+
+
+@app.on_event("startup")
+async def on_startup():
+    await init_beanie(
+        database=db,
+        document_models=[
+            User,
+        ],
+    )
