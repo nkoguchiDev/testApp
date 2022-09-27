@@ -5,6 +5,7 @@ from app.api.api_v1.api import api_router
 
 from app.core.config import settings
 from app.db.session import db
+from app.models.user import User
 
 app = FastAPI(title=settings.PROJECT_NAME,
               openapi_url=f"{settings.API_V1_STR}/openapi.json")

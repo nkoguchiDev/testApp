@@ -3,15 +3,14 @@ from typing import Generator
 
 import pytest
 
-from app.db
-from app.cache
+from app.db.session import db, cache
 
 
 @pytest.fixture(scope="session")
-def db() -> Generator:
-    yield SessionLocal()
+def get_db() -> Generator:
+    yield db
 
 
 @pytest.fixture(scope="session")
-def cache() -> Generator:
-    yield SessionLocal()
+def get_cache() -> Generator:
+    yield cache
