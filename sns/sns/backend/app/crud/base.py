@@ -18,10 +18,18 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         """
         self.model = model
 
-    def create(self, db, *, obj_in: CreateSchemaType) -> ModelType:
-        obj_in_data = jsonable_encoder(obj_in)
-        db_obj = self.model(**obj_in_data)  # type: ignore
-        db.add(db_obj)
-        db.commit()
-        db.refresh(db_obj)
-        return db_obj
+    def get(self, id: Any) -> Optional[ModelType]:
+        raise NotImplementedError()
+
+    def create(self, obj_in: CreateSchemaType) -> ModelType:
+        raise NotImplementedError()
+
+    def update(
+        self,
+        db_obj: ModelType,
+        obj_in: Union[UpdateSchemaType, Dict[str, Any]]
+    ) -> ModelType:
+        raise NotImplementedError()
+
+    def remove(self, id: int) -> ModelType:
+        raise NotImplementedError()

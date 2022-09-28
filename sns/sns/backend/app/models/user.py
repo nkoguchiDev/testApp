@@ -1,12 +1,18 @@
-import pymongo
-
-from beanie import Document, Indexed
+from mongoengine import Document
+from mongoengine.fields import StringField, BooleanField, EmailField
 
 
 class User(Document):
-    id: Indexed(int)
-    full_name: Indexed(str, index_type=pymongo.TEXT)
-    email: Indexed(str, index_type=pymongo.TEXT, unique=True)
-    hashed_password: str
-    is_active: bool = True
-    is_superuser: bool = False
+    uuid = StringField(unique=True, required=True)
+    full_name = StringField(default=None, max_length=50)
+    email = EmailField(unique=True, required=True)
+    hashed_password = StringField(required=True)
+    is_active = BooleanField(default=True)
+    is_superuser = BooleanField(default=False)
+
+    meta = {
+        'db_alias': 'mongodb',
+        'collection': 'sns',
+        'max_documents': 1000,
+        'max_size': 2000000
+    }

@@ -1,1 +1,10 @@
-beanie
+# main package
+mongoengine
+fastapi
+python-jose[cryptography]
+passlib[bcrypt]
+pydantic[email]
+typing
+# test package
+pytest
+pytest-asyncio
