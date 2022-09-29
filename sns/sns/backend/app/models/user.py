@@ -7,8 +7,8 @@ class User(Document):
     full_name = StringField(default=None, max_length=50)
     email = EmailField(unique=True, required=True)
     hashed_password = StringField(required=True)
-    is_active = BooleanField(default=True)
-    is_superuser = BooleanField(default=False)
+    is_active = BooleanField(required=True)
+    is_superuser = BooleanField(required=True)
 
     meta = {
         'db_alias': 'mongodb',

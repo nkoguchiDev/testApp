@@ -18,8 +18,8 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         """
         self.model = model
 
-    def get(self, id: Any) -> Optional[ModelType]:
-        raise NotImplementedError()
+    def get(self, uuid: str) -> Optional[ModelType]:
+        return self.model.objects(uuid=uuid).first()
 
     def create(self, obj_in: CreateSchemaType) -> ModelType:
         raise NotImplementedError()
