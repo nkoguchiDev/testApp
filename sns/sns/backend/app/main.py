@@ -1,5 +1,4 @@
 from fastapi import FastAPI
-from beanie import init_beanie
 from mongoengine import connect, disconnect
 
 from app.api.api_v1.api import api_router
@@ -22,11 +21,6 @@ app = FastAPI(title=settings.PROJECT_NAME,
 app.include_router(api_router, prefix=settings.API_V1_STR)
 
 
-@app.get("/health")
-def root():
-    return {"status": "ok"}
-
-
 @app.on_event("startup")
 def on_startup():
     connect(
@@ -42,3 +36,8 @@ def on_startup():
 @app.on_event("shutdown")
 def shutdown_event():
     disconnect(alias='mongodb')
+
+
+@app.get("/health")
+def root():
+    return {"status": "ok"}

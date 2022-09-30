@@ -2,6 +2,12 @@ from pydantic import BaseSettings
 
 
 class Settings(BaseSettings):
+
+    # project settings
+    PROJECT_NAME: str = "sns"
+    API_V1_STR: str = "/api/v1"
+
+    # datastore settings
     DB_USER: str
     DB_PASSWORD: str
     DB_HOST: str

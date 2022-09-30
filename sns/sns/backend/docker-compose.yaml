@@ -1,6 +1,17 @@
 version: "3.8"
 
 services:
+  api:
+    container_name: FastAPI
+    build: .
+    ports:
+      - "80:80"
+    environment:
+        - DB_HOST=mongo
+        - DB_PORT=${DB_PORT}
+        - DB_USER=${DB_USER}
+        - DB_PASSWORD=${DB_PASSWORD}
+
   mongo:
     image: mongo:5.0
     restart: always
