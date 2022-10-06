@@ -1,23 +1,13 @@
+---
 test_name: users api
 
+includes:
+  - !include users_request.yaml
+  - !include config/common.yaml
+  - !include config/user.yaml
+
 stages:
-  - name: Generate admin user
-    request:
-      url: https://localhost/api/v1/users
-      method: POST
-      params:
-        admin: True
-      headers:
-        content-type: application/json
-      json:
-        email: email
-        password: password
-    response:
-      status_code: 201
-      json:
-        type: admin
-        userId: userid
-        email: email
-      save:
-        json:
-          userId: userId
+  - type: ref
+    id: generate_admin_user
+  - type: ref
+    id: create_session

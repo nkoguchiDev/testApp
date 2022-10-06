@@ -1,0 +1,10 @@
+---
+name: common settings
+description: テスト用の設定
+
+variables:
+  # server settings
+  host: localhost
+
+  # api settings
+  version: v1

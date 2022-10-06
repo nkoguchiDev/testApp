@@ -1,0 +1,7 @@
+---
+name: user settings
+description: テスト用の設定
+
+variables:
+  email: nkoguchiDev@email.test.com
+  password: nkoguchiDevPassword

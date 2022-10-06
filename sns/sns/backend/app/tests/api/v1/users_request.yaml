@@ -1,0 +1,45 @@
+---
+name: Users stage
+description: Users
+
+stages:
+  - id: generate_admin_user
+    name: generate admin user
+    # skip: False
+
+    request:
+      url: http://{host}/api/{version}/users
+      method: POST
+      params:
+        admin: True
+      headers:
+        content-type: application/json
+      json:
+        email: "{email:s}"
+        password: "{password:s}"
+    response:
+      status_code: 201
+      json:
+        email: "{email:s}"
+        is_active: True
+        is_superuser: True
+      save:
+        json:
+          userId: userId
+
+  - id: create_session
+    name: create session
+
+    request:
+      url: http://{host}/api/{version}/session
+      method: POST
+      headers:
+        content-type: application/json
+      json:
+        email: "{email:s}"
+        password: "{password:s}"
+    response:
+      status_code: 201
+      save:
+        headers:
+          set-cookie: cookie
