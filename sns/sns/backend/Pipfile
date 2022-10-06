@@ -13,6 +13,8 @@ python-jose = {extras = ["cryptography"], version = "*"}
 passlib = {extras = ["bcrypt"], version = "*"}
 pytest-asyncio = "*"
 mongoengine = "*"
+uvicorn = {extras = ["standard"], version = "*"}
+tavern = "*"
 
 [dev-packages]
 
