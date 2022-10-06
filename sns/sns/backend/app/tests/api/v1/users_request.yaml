@@ -23,9 +23,7 @@ stages:
         email: "{email:s}"
         is_active: True
         is_superuser: True
-      save:
-        json:
-          userId: userId
+        full_name: null
 
   - id: create_session
     name: create session
@@ -43,3 +41,14 @@ stages:
       save:
         headers:
           set-cookie: cookie
+
+  - id: remove_admin_user
+    name: remove admin user
+
+    request:
+      url: http://{host}/api/{version}/users
+      method: DELETE
+      headers:
+        cookie: "{cookie}"
+    response:
+      status_code: 204
