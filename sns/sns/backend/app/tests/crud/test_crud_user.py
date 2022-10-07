@@ -102,3 +102,13 @@ def test_update_user() -> None:
     assert user_2
     assert user.email == user_2.email
     assert verify_password(new_password, user_2.hashed_password)
+
+
+def test_remove_user() -> None:
+    password = random_lower_string()
+    username = random_email()
+    user_in = UserCreate(email=username, password=password, is_superuser=True)
+    user = crud.user.create(obj_in=user_in)
+    crud.user.remove(uuid=user.uuid)
+    user_2 = crud.user.get(uuid=user.uuid)
+    assert user_2 is None
