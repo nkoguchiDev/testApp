@@ -12,7 +12,13 @@ from app.core.config import settings
 
 def get_current_user(session_cookie: Union[str, None] = Cookie(
         default=None)) -> models.User:
-    print(session_cookie)
+
+    if not session_cookie:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Could not validate credentials",
+        )
+
     try:
         payload = jwt.decode(
             session_cookie,
