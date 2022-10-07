@@ -38,9 +38,8 @@ stages:
         password: "{password:s}"
     response:
       status_code: 201
-      save:
-        headers:
-          set-cookie: cookie
+      cookies:
+        - ""
 
   - id: remove_admin_user
     name: remove admin user
@@ -48,7 +47,5 @@ stages:
     request:
       url: http://{host}/api/{version}/users
       method: DELETE
-      headers:
-        cookie: "{cookie}"
     response:
       status_code: 204
