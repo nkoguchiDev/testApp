@@ -30,5 +30,5 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     ) -> ModelType:
         raise NotImplementedError()
 
-    def remove(self, uuid: int) -> ModelType:
-        return self.model.objects(uuid=uuid).delete()
+    def remove(self, uuid: int) -> None:
+        self.model.objects(uuid=uuid).delete()
