@@ -39,7 +39,7 @@ stages:
     response:
       status_code: 201
       cookies:
-        - ""
+        - session_cookie
 
   - id: remove_admin_user
     name: remove admin user
