@@ -11,3 +11,5 @@ stages:
     id: generate_admin_user
   - type: ref
     id: create_session
+  - type: ref
+    id: remove_admin_user
