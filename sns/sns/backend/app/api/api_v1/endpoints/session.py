@@ -34,9 +34,8 @@ def create_session(session: schemas.SessionCreate, response: Response) -> Any:
         user.uuid,
         expires_delta=access_token_expires
     )
-    return JSONResponse(
+    response = JSONResponse(
         status_code=status.HTTP_201_CREATED,
-        headers={
-            "set-cookie": f"session-cookie={cookie}"
-        },
         content=None)
+    response.set_cookie(key="session_cookie", value=cookie)
+    return response
