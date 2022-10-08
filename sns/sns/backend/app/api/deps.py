@@ -33,7 +33,7 @@ def get_current_user(session_cookie: Union[str, None] = Cookie(
         )
     user = crud.user.get(uuid=token_data.sub)
     if not user:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(status_code=403, detail="User not found")
     return user
 
 
