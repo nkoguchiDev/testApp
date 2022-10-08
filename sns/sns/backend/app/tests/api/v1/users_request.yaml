@@ -23,7 +23,6 @@ stages:
         email: "{email:s}"
         is_active: True
         is_superuser: True
-        full_name: null
 
   - id: create_session
     name: create session
@@ -40,6 +39,19 @@ stages:
       status_code: 201
       cookies:
         - session_cookie
+
+  - id: request_user_information
+    name: request user information
+
+    request:
+      url: http://{host}/api/{version}/me
+      method: GET
+    response:
+      status_code: 200
+      json:
+        email: "{email:s}"
+        is_active: True
+        is_superuser: True
 
   - id: remove_admin_user
     name: remove admin user
