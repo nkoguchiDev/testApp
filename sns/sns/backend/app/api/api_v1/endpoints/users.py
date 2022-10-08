@@ -29,7 +29,6 @@ def create_user(user_in: schemas.UserCreate, admin: bool = False) -> Any:
         email=user.email,
         is_active=user.is_active,
         is_superuser=user.is_superuser,
-        full_name=user.full_name,
     )
     return JSONResponse(
         status_code=status.HTTP_201_CREATED,
