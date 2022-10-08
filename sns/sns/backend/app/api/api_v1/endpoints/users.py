@@ -1,6 +1,6 @@
 from typing import Any, Union
 
-from fastapi import APIRouter, Header, status, HTTPException, Depends
+from fastapi import APIRouter, status, HTTPException, Depends
 from fastapi.responses import JSONResponse
 
 from app import crud, schemas, models
@@ -36,7 +36,7 @@ def create_user(user_in: schemas.UserCreate, admin: bool = False) -> Any:
         content=response.dict(exclude_unset=True))
 
 
-@router.delete("")
+@router.delete("", status_code=status.HTTP_204_NO_CONTENT)
 def remove_admin_user(
     current_user: models.User = Depends(
         deps.get_current_active_user)) -> Any:
@@ -44,6 +44,4 @@ def remove_admin_user(
     Remove admin user.
     """
     crud.user.remove(uuid=current_user.uuid)
-    return JSONResponse(
-        status_code=204,
-        content=None)
+    return None
