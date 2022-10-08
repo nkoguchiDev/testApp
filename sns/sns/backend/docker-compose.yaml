@@ -11,6 +11,7 @@ services:
         - DB_PORT=${DB_PORT}
         - DB_USER=${DB_USER}
         - DB_PASSWORD=${DB_PASSWORD}
+        - SECRET_KEY=${SECRET_KEY}
 
   mongo:
     image: mongo:5.0
