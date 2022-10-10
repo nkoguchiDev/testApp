@@ -1,23 +1,36 @@
 function nextPage() {
-    id = document.getElementById("email").value;
+    em = document.getElementById("email").value;
     pwd = document.getElementById("password").value;
 
-    const data = {
-        email: id,
+    postData("http://localhost:80/api/v1/session", {
+        email: em,
         password: pwd,
-    };
-
-    const XHR = new XMLHttpRequest();
-
-    // エラーが発生した場合に行うことを定義します
-    XHR.addEventListener("error", function (event) {
-        alert("Oops! Something went wrong.");
+    }).then((data) => {
+        if (data) {
+            // location = "userhome.html";
+        } else {
+            alert("サインインに失敗しました");
+        }
     });
+}
 
-    // リクエストをセットアップします
-    XHR.open("POST", "http://localhost:80/api/v1/session");
-
-    XHR.setRequestHeader("Content-Type", "application/json");
-    // 最後に、データを送信します
-    XHR.send(JSON.stringify(data));
+// POST メソッドの実装の例
+async function postData(url = "", data = {}) {
+    // 既定のオプションには * が付いています
+    const response = await fetch(url, {
+        method: "POST",
+        mode: "cors",
+        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: "include", // include, *same-origin, omit
+        headers: {
+            "Content-Type": "application/json",
+        },
+        redirect: "follow", // manual, *follow, error
+        referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: JSON.stringify(data),
+    });
+    if (response.status === 201) {
+        return true;
+    }
+    return false;
 }
