@@ -2,14 +2,14 @@ function nextPage() {
     em = document.getElementById("email").value;
     pwd = document.getElementById("password").value;
 
-    postData("http://localhost:80/api/v1/session", {
+    postData("http://127.0.0.1:80/api/v1/session", {
         email: em,
         password: pwd,
     }).then((data) => {
         if (data) {
-            // location = "userhome.html";
+            location = "userhome.html";
         } else {
-            alert("サインインに失敗しました");
+            location = "no_permission.html";
         }
     });
 }
