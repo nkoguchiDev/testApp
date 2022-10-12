@@ -2,7 +2,7 @@ function nextPage() {
     em = document.getElementById("email").value;
     pwd = document.getElementById("password").value;
 
-    postData("http://localhost:80/api/v1/users", {
+    postData("http://127.0.0.1:80/api/v1/users", {
         email: em,
         password: pwd,
     }).then((data) => {
