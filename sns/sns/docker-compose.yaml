@@ -35,5 +35,16 @@ services:
       ME_CONFIG_MONGODB_SERVER: mongo
     depends_on:
       - mongo # mongoコンテナが起動してから起動させる
+    
+  react:
+    container_name: react-web-app
+    image: node:17-alpine
+    volumes:
+      - ./frontend/app:/app
+    working_dir: /app
+    command: sh -c "npm install && npm start"
+    ports:
+      - 3000:3000
+
 volumes:
   mongo-database:
