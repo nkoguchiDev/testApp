@@ -1,5 +1,7 @@
-import { Header } from "../components/layouts/Header/Header";
-
 export const Home = () => {
-    return <Header />;
+    return (
+        <div>
+            <h1>Home</h1>
+        </div>
+    );
 };
