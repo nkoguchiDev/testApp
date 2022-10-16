@@ -1,9 +1,7 @@
 import { BrowserRouter, Link, Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 
-import { Home } from "../../../pages/Home";
-import { Login } from "../../../pages/Login";
-import { SignUp } from "../../../pages/SignUp";
+import { AppRouter } from "../../../router";
 
 import "./style.css";
 
@@ -35,11 +33,7 @@ export const Header = () => {
                     </HeaderBarItem>
                 </HeaderBar>
 
-                <Routes>
-                    <Route exact path="/" element={<Home />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/signup" element={<SignUp />} />
-                </Routes>
+                <AppRouter />
             </div>
         </BrowserRouter>
     );
