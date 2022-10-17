@@ -1,26 +1,17 @@
-import { BrowserRouter, Link, Routes, Route } from "react-router-dom";
-
-import { UserHome } from "../pages/UserHome";
-import { Forbidden } from "../pages/Forbidden";
+import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
+    const navigate = useNavigate();
+
     function createSession() {
         postToBackend("http://localhost:80/api/v1/session", {
             email: document.getElementById("email").value,
             password: document.getElementById("password").value,
         }).then((data) => {
             if (data) {
-                return (
-                    <Routes>
-                        <Route path="/users" element={<UserHome />} />
-                    </Routes>
-                );
+                navigate("/users");
             } else {
-                return (
-                    <Routes>
-                        <Route path="/forbidden" element={<Forbidden />} />
-                    </Routes>
-                );
+                navigate("/forbidden");
             }
         });
     }
@@ -72,7 +63,7 @@ export const Login = () => {
                                 name="pass"
                                 id="password"
                                 placeholder="Password"
-                                onchange="validation();"
+                                onChange="validation();"
                             />
                         </div>
                         <div>
