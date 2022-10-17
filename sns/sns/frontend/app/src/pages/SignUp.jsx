@@ -1,6 +1,9 @@
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 export const SignUp = () => {
+    const navigate = useNavigate();
+
     const ContactTitle = styled.div`
         text-align: center;
     `;
@@ -11,9 +14,9 @@ export const SignUp = () => {
             password: document.getElementById("password").value,
         }).then((data) => {
             if (data) {
-                window.location.href = "/";
+                navigate("/");
             } else {
-                console.log("not 201");
+                alert("not 201");
             }
         });
     };
@@ -66,7 +69,7 @@ export const SignUp = () => {
                                 name="pass"
                                 id="password"
                                 placeholder="Password"
-                                onchange="validation();"
+                                onChange="validation();"
                             />
                         </div>
                         <div>
