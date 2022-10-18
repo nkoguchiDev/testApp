@@ -1,5 +1,8 @@
 import { useNavigate } from "react-router-dom";
 
+import { RichButton } from "../components/Elements/Button";
+import { LoginForm } from "../components/Elements/LoginForm";
+
 export const Login = () => {
     const navigate = useNavigate();
 
@@ -40,37 +43,10 @@ export const Login = () => {
                 <center>
                     <h1 className="contact-title">ログイン</h1>
                 </center>
-                <center>
-                    <p>
-                        Email, Passwordご入力の上,
-                        「ログイン」ボタンをクリックしてください.
-                    </p>
-                </center>
                 <div>
                     <center>
-                        <div>
-                            <input
-                                type="email"
-                                name="email"
-                                id="email"
-                                placeholder="Email"
-                            />
-                        </div>
-                        <br />
-                        <div>
-                            <input
-                                type="password"
-                                name="pass"
-                                id="password"
-                                placeholder="Password"
-                                onChange="validation();"
-                            />
-                        </div>
-                        <div>
-                            <button type="button" onClick={createSession}>
-                                ログイン
-                            </button>
-                        </div>
+                        <LoginForm />
+                        <RichButton type="login" onClick={createSession} />
                     </center>
                 </div>
             </form>
