@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
+import { RichButton } from "../components/Elements/Button";
+import { LoginForm } from "../components/Elements/LoginForm";
+
 export const SignUp = () => {
     const navigate = useNavigate();
 
@@ -47,36 +50,10 @@ export const SignUp = () => {
                 <ContactTitle>
                     <h1 className="contact-title">ユーザ作成</h1>
                 </ContactTitle>
-                <ContactTitle>
-                    <p>
-                        Email, Passwordご入力の上, 「作成」ボタンをクリックしてください.
-                    </p>
-                </ContactTitle>
                 <div>
                     <center>
-                        <div>
-                            <input
-                                type="email"
-                                name="email"
-                                id="email"
-                                placeholder="Email"
-                            />
-                        </div>
-                        <br />
-                        <div>
-                            <input
-                                type="password"
-                                name="pass"
-                                id="password"
-                                placeholder="Password"
-                                onChange="validation();"
-                            />
-                        </div>
-                        <div>
-                            <button type="button" onClick={createUser}>
-                                作成
-                            </button>
-                        </div>
+                        <LoginForm />
+                        <RichButton type="Sign Up" onClick={createUser} />
                     </center>
                 </div>
             </form>
