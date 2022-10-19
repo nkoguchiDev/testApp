@@ -37,7 +37,7 @@ export const Header = () => {
                         Login
                     </Button>
                     <Button onClick={mvSignInPage} color="inherit">
-                        Sign In
+                        Sign Up
                     </Button>
                 </Toolbar>
             </AppBar>
