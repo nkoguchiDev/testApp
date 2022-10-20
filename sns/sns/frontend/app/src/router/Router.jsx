@@ -6,7 +6,7 @@ import { Login } from "../pages/Login";
 import { SignUp } from "../pages/SignUp";
 import { Forbidden } from "../pages/Forbidden";
 
-import { Header } from "../components/layouts/Header/Header";
+import { Header } from "../components/layouts/Header";
 
 export const Router = () => {
     return (
@@ -25,7 +25,6 @@ export const Router = () => {
                 path="/users"
                 element={
                     <>
-                        <Header />
                         <UserHome />
                     </>
                 }
