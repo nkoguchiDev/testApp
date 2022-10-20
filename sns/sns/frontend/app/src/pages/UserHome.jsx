@@ -1,8 +1,21 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import styled from "styled-components";
+
+import ChatRoundedIcon from "@mui/icons-material/ChatRounded";
+import IconButton from "@mui/material/IconButton";
+
+import { HeaderOnLogin } from "../components/layouts/Header";
 
 export const UserHome = () => {
     const navigate = useNavigate();
+
+    const PushButton = styled.div`
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        padding: 15px;
+    `;
 
     useEffect(() => {
         return () => {
@@ -44,9 +57,28 @@ export const UserHome = () => {
         }
         return false;
     }
+    const user = {
+        name: "unknown",
+        icon: undefined,
+    };
     return (
-        <div>
-            <ul id="userinfo"></ul>
-        </div>
+        <>
+            <HeaderOnLogin user />
+            <div>
+                <ul id="userinfo"></ul>
+            </div>
+            <PushButton>
+                <IconButton
+                    size="large"
+                    aria-label="account of current user"
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    // onClick={handleMenu}
+                    color="inherit"
+                >
+                    <ChatRoundedIcon fontSize="large" color="primary" />
+                </IconButton>
+            </PushButton>
+        </>
     );
 };
