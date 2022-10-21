@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { RichButton } from "../components/Elements/Button";
 import { LoginForm } from "../components/Elements/LoginForm";
 
+import { createUser } from "/app/src/features/users/api/createUser";
+
 export const SignUp = () => {
     const navigate = useNavigate();
 
@@ -11,37 +13,14 @@ export const SignUp = () => {
         text-align: center;
     `;
 
-    const createUser = () => {
-        postToBackend("http://localhost:80/api/v1/users", {
-            email: document.getElementById("email").value,
-            password: document.getElementById("password").value,
-        }).then((data) => {
-            if (data) {
-                navigate("/");
-            } else {
-                alert("not 201");
-            }
-        });
-    };
-
-    const postToBackend = async (url = "", data = {}) => {
-        const response = await fetch(url, {
-            method: "POST",
-            mode: "cors",
-            cache: "no-cache",
-            credentials: "same-origin",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            redirect: "follow",
-            referrerPolicy: "no-referrer",
-            body: JSON.stringify(data),
-        });
-        if (response.status === 201) {
-            return response.json();
-        } else {
-            return null;
-        }
+    const createAccount = () => {
+        createUser(
+            document.getElementById("email").value,
+            document.getElementById("password").value
+        ).then(
+            (result) => navigate("/"),
+            (error) => alert("please retry")
+        );
     };
 
     return (
@@ -53,7 +32,7 @@ export const SignUp = () => {
                 <div>
                     <center>
                         <LoginForm />
-                        <RichButton type="Sign Up" onClick={createUser} />
+                        <RichButton type="Sign Up" onClick={createAccount} />
                     </center>
                 </div>
             </form>
