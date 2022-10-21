@@ -3,40 +3,20 @@ import { useNavigate } from "react-router-dom";
 import { RichButton } from "../components/Elements/Button";
 import { LoginForm } from "../components/Elements/LoginForm";
 
+import { createSession } from "/app/src/features/auth/api/createSession";
+
 export const Login = () => {
     const navigate = useNavigate();
+    const loginAccount = () => {
+        createSession(
+            document.getElementById("email").value,
+            document.getElementById("password").value
+        ).then(
+            (result) => navigate("/users"),
+            (error) => navigate("/forbidden")
+        );
+    };
 
-    function createSession() {
-        postToBackend("http://localhost:80/api/v1/session", {
-            email: document.getElementById("email").value,
-            password: document.getElementById("password").value,
-        }).then((data) => {
-            if (data) {
-                navigate("/users");
-            } else {
-                navigate("/forbidden");
-            }
-        });
-    }
-
-    async function postToBackend(url = "", data = {}) {
-        const response = await fetch(url, {
-            method: "POST",
-            mode: "cors",
-            cache: "no-cache",
-            credentials: "include",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            redirect: "follow",
-            referrerPolicy: "no-referrer",
-            body: JSON.stringify(data),
-        });
-        if (response.status === 201) {
-            return true;
-        }
-        return false;
-    }
     return (
         <div>
             <form name="login_form">
@@ -46,7 +26,7 @@ export const Login = () => {
                 <div>
                     <center>
                         <LoginForm />
-                        <RichButton type="login" onClick={createSession} />
+                        <RichButton type="login" onClick={loginAccount} />
                     </center>
                 </div>
             </form>
