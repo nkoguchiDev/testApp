@@ -2,21 +2,22 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 import { RichButton } from "../components/Elements/Button";
-import { LoginForm } from "../components/Elements/LoginForm";
+import { CreateAccountForm } from "../components/Elements/CreateAccountForm";
 
 import { createUser } from "/app/src/features/users/api/createUser";
+
+const ContactTitle = styled.div`
+    text-align: center;
+`;
 
 export const SignUp = () => {
     const navigate = useNavigate();
 
-    const ContactTitle = styled.div`
-        text-align: center;
-    `;
-
     const createAccount = () => {
         createUser(
             document.getElementById("email").value,
-            document.getElementById("password").value
+            document.getElementById("password").value,
+            document.getElementById("display_name").value
         ).then(
             (result) => navigate("/"),
             (error) => alert("please retry")
@@ -31,7 +32,7 @@ export const SignUp = () => {
                 </ContactTitle>
                 <div>
                     <center>
-                        <LoginForm />
+                        <CreateAccountForm />
                         <RichButton type="Sign Up" onClick={createAccount} />
                     </center>
                 </div>
