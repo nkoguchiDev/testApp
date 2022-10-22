@@ -18,6 +18,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
             uuid=uuid4().hex,
             email=obj_in.email,
             hashed_password=get_password_hash(obj_in.password),
+            display_name=obj_in.display_name,
             is_active=obj_in.is_active,
             is_superuser=obj_in.is_superuser,
         )
