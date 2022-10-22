@@ -17,10 +17,12 @@ stages:
       json:
         email: "{email:s}"
         password: "{password:s}"
+        display_name: "{display_name:s}"
     response:
       status_code: 201
       json:
         email: "{email:s}"
+        display_name: "{display_name:s}"
         is_active: True
         is_superuser: True
 
@@ -50,6 +52,7 @@ stages:
       status_code: 200
       json:
         email: "{email:s}"
+        display_name: "{display_name:s}"
         is_active: True
         is_superuser: True
 
