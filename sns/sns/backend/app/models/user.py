@@ -6,6 +6,7 @@ class User(Document):
     uuid = StringField(unique=True, required=True)
     email = EmailField(unique=True, required=True)
     hashed_password = StringField(required=True)
+    display_name = StringField(required=True)
     is_active = BooleanField(required=True)
     is_superuser = BooleanField(required=True)
 
