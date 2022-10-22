@@ -16,6 +16,7 @@ def get_my_information(
     return jsonable_encoder(
         schemas.UserBase(
             email=current_user.email,
+            display_name=current_user.display_name,
             is_active=current_user.is_active,
             is_superuser=current_user.is_active
         )
