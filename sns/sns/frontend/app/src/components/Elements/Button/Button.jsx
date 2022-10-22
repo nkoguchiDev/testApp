@@ -1,13 +1,13 @@
 import { Button } from "@mui/material";
 import styled from "styled-components";
 
-const ButtonDiv = styled.div`
+const StyleMargin = styled.div`
     margin: 15px;
 `;
 
 export const RichButton = (props) => {
     return (
-        <ButtonDiv>
+        <StyleMargin>
             <Button
                 variant="outlined"
                 size="small"
@@ -16,6 +16,6 @@ export const RichButton = (props) => {
             >
                 {props.type}
             </Button>
-        </ButtonDiv>
+        </StyleMargin>
     );
 };
