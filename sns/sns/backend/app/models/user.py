@@ -4,6 +4,7 @@ from mongoengine.fields import StringField, BooleanField, EmailField
 
 class User(Document):
     uuid = StringField(unique=True, required=True)
+    _type = StringField(default="user")
     email = EmailField(unique=True, required=True)
     hashed_password = StringField(required=True)
     display_name = StringField(required=True)
@@ -12,7 +13,7 @@ class User(Document):
 
     meta = {
         'db_alias': 'mongodb',
-        'collection': 'sns',
+        'collection': 'user',
         'max_documents': 1000,
         'max_size': 2000000
     }
