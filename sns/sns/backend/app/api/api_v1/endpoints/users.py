@@ -1,7 +1,7 @@
+import json
 from typing import Any
 
-from fastapi import APIRouter, status, HTTPException, Depends
-from fastapi.responses import JSONResponse
+from fastapi import APIRouter, HTTPException, Depends
 
 from app import crud, schemas, models
 from app.api import deps
@@ -9,7 +9,7 @@ from app.api import deps
 router = APIRouter()
 
 
-@router.post("", response_model=schemas.UserBase)
+@router.post("", response_model=schemas.UserBase, status_code=201)
 def create_user(user_in: schemas.UserCreate, admin: bool = False) -> Any:
     """
     Create new user.
@@ -25,18 +25,10 @@ def create_user(user_in: schemas.UserCreate, admin: bool = False) -> Any:
         user_in.is_superuser = admin
 
     user = crud.user.create(obj_in=user_in)
-    response = schemas.UserBase(
-        email=user.email,
-        display_name=user.display_name,
-        is_active=user.is_active,
-        is_superuser=user.is_superuser,
-    )
-    return JSONResponse(
-        status_code=status.HTTP_201_CREATED,
-        content=response.dict(exclude_unset=True))
+    return json.loads(user.to_json())
 
 
-@router.delete("", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("", status_code=204)
 def remove_admin_user(
     current_user: models.User = Depends(
         deps.get_current_active_user)) -> Any:
