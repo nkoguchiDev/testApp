@@ -1,5 +1,6 @@
 from uuid import uuid4
 
+
 from typing import Any, Dict, Optional, Union
 
 from app.crud.base import CRUDBase
@@ -14,8 +15,9 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
         return User.objects(email=email).first()
 
     def create(self, obj_in: UserCreate) -> User:
+        uuid = uuid4().hex
         db_obj = User(
-            uuid=uuid4().hex,
+            uuid=uuid,
             email=obj_in.email,
             hashed_password=get_password_hash(obj_in.password),
             display_name=obj_in.display_name,
@@ -23,8 +25,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
             is_superuser=obj_in.is_superuser,
         )
         db_obj.save()
-
-        return db_obj
+        return User.objects(uuid=uuid).first()
 
     def update(self,
                uuid: str,
