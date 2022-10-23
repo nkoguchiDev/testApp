@@ -1,7 +1,6 @@
 from typing import Union
 
 from fastapi import Depends, HTTPException, status, Cookie
-from fastapi.security import OAuth2PasswordBearer
 from jose import jwt
 from pydantic import ValidationError
 
