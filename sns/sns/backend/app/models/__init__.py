@@ -1,1 +1,2 @@
-from .user import User
+from .user import User  # noqa
+from .post_message import PostMessage  # noqa
