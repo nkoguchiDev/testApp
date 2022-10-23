@@ -1,6 +1,5 @@
 import pytest
 
-from typing import Generator
 from mongoengine import connect, disconnect
 
 from app.core.config import settings
@@ -19,8 +18,3 @@ def scope_session():
     )
     yield
     disconnect(alias='mongodb')
-
-
-# @pytest.fixture(scope="session")
-# def get_cache() -> Generator:
-#     yield cache
