@@ -1,17 +1,37 @@
 ---
-test_name: users api
+test_name: api usage
 
 includes:
-  - !include users_request.yaml
+  # common config
   - !include config/common.yaml
+
+  # user config
+  - !include users_request.yaml
   - !include config/user.yaml
 
+  # message config
+  - !include messages_request.yaml
+  - !include config/message.yaml
+
 stages:
+  # user api usage
   - type: ref
     id: generate_admin_user
   - type: ref
     id: create_session
   - type: ref
     id: request_user_information
+  - type: ref
+    id: remove_admin_user
+
+  # message api usage
+  - type: ref
+    id: generate_admin_user
+  - type: ref
+    id: create_session
+  - type: ref
+    id: request_message_post
+  - type: ref
+    id: request_message_list
   - type: ref
     id: remove_admin_user
