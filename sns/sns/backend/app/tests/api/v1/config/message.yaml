@@ -1,0 +1,6 @@
+---
+name: message settings
+description: テスト用の設定
+
+variables:
+  content: hellow nkoguchiDev!
