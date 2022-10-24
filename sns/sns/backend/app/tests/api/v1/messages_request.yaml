@@ -1,0 +1,28 @@
+---
+name: Messages stage
+description: Messages
+
+stages:
+  - id: request_message_post
+    name: request user post
+
+    request:
+      url: http://{host}/api/{version}/messages
+      method: POST
+      headers:
+        content-type: application/json
+      json:
+        content: "{content:s}"
+    response:
+      status_code: 201
+      json:
+        content: "{content:s}"
+
+  - id: request_message_list
+    name: request user list
+
+    request:
+      url: http://{host}/api/{version}/messages
+      method: GET
+    response:
+      status_code: 200
