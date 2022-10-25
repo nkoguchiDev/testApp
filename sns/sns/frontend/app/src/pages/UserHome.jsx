@@ -7,6 +7,7 @@ import IconButton from "@mui/material/IconButton";
 
 import { HeaderOnLogin } from "../components/layouts/Header";
 import { getUserProfile } from "/app/src/features/users/api/getUserProfile";
+import { EventCard } from "../components/Elements/EventCard";
 
 const PushButton = styled.div`
     position: absolute;
@@ -52,6 +53,7 @@ export const UserHome = () => {
             <div>
                 <ul id="userinfo"></ul>
             </div>
+            <EventCard />
             <PushButton>
                 <IconButton
                     size="large"
