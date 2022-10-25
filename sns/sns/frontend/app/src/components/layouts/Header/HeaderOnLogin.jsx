@@ -4,13 +4,14 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import AccountCircle from "@mui/icons-material/AccountCircle";
 import Avatar from "@mui/material/Avatar";
+import Badge from "@mui/material/Badge";
+import MailIcon from "@mui/icons-material/Mail";
+import NotificationsIcon from "@mui/icons-material/Notifications";
 
 import { useNavigate } from "react-router-dom";
 
@@ -42,6 +43,11 @@ export const HeaderOnLogin = (props) => {
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         LOGO
                     </Typography>
+                    <IconButton aria-label="cart">
+                        <Badge badgeContent={4} color="error" marge="">
+                            <NotificationsIcon color="action" />
+                        </Badge>
+                    </IconButton>
                     <div>
                         <IconButton
                             size="large"
