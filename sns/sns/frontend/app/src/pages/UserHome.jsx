@@ -17,35 +17,35 @@ const PushButton = styled.div`
 `;
 
 export const UserHome = () => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
-    useEffect(() => {
-        return () => {
-            getUserInformation();
-        };
-    });
+    // useEffect(() => {
+    //     return () => {
+    //         getUserInformation();
+    //     };
+    // });
 
-    const getUserInformation = () => {
-        getUserProfile().then(
-            (result) => {
-                const element = document.getElementById("userinfo");
+    // const getUserInformation = () => {
+    //     getUserProfile().then(
+    //         (result) => {
+    //             const element = document.getElementById("userinfo");
 
-                const li_email = document.createElement("li");
-                li_email.textContent = "email: " + result.email;
-                element.appendChild(li_email);
+    //             const li_email = document.createElement("li");
+    //             li_email.textContent = "email: " + result.email;
+    //             element.appendChild(li_email);
 
-                const li_display_name = document.createElement("li");
-                li_display_name.textContent = "display name: " + result.display_name;
-                element.appendChild(li_display_name);
+    //             const li_display_name = document.createElement("li");
+    //             li_display_name.textContent = "display name: " + result.display_name;
+    //             element.appendChild(li_display_name);
 
-                // 最後の子要素として追加
-                const li_is_active = document.createElement("li");
-                li_is_active.textContent = "is_active: " + result.is_active;
-                element.appendChild(li_is_active);
-            },
-            (error) => navigate("/forbidden")
-        );
-    };
+    //             // 最後の子要素として追加
+    //             const li_is_active = document.createElement("li");
+    //             li_is_active.textContent = "is_active: " + result.is_active;
+    //             element.appendChild(li_is_active);
+    //         },
+    //         (error) => navigate("/forbidden")
+    //     );
+    // };
 
     return (
         <>
