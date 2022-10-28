@@ -1,7 +1,7 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
 import styled from "styled-components";
 
 import Card from "@mui/material/Card";
@@ -19,12 +19,12 @@ import Tooltip from "@mui/material/Tooltip";
 
 import { getMessageList } from "./../../../features/messages/api/getMessageList";
 
-const CardList = styled.li`
+const _CardList = styled.li`
     display: block;
     margin: 5px;
 `;
 
-export const EventCard = (props) => {
+export const EventCard = () => {
     const navigate = useNavigate();
     const [events, setEvents] = React.useState([{ content: "josakda" }]);
 
@@ -32,7 +32,7 @@ export const EventCard = (props) => {
         return () => {
             setMessagesToCards();
         };
-    });
+    }, []);
 
     const setMessagesToCards = () => {
         return getMessageList().then(
@@ -41,12 +41,15 @@ export const EventCard = (props) => {
         );
     };
 
+    const aaa = (event) => {
+        alert(event);
+    };
     return (
-        <center>
+        <div>
             <ul id="events">
                 {events.map((e, i) => (
-                    <CardList key={i}>
-                        <Card variant="outlined" sx={{ maxWidth: 345 }}>
+                    <_CardList id={i} key={i}>
+                        <Card variant="outlined" sx={{ maxWidth: 350, margin: "auto" }}>
                             <CardHeader
                                 avatar={
                                     <Avatar
@@ -60,7 +63,6 @@ export const EventCard = (props) => {
                                     </IconButton>
                                 }
                                 title="message post user name"
-                                // subheader={e.created}
                                 subheader="date"
                             />
                             <CardContent>
@@ -76,15 +78,15 @@ export const EventCard = (props) => {
                                     <ShareIcon />
                                 </IconButton>
                                 <Tooltip title="Delete">
-                                    <IconButton>
+                                    <IconButton id="hi" onClick={aaa.bind(this, i)}>
                                         <DeleteIcon />
                                     </IconButton>
                                 </Tooltip>
                             </CardActions>
                         </Card>
-                    </CardList>
+                    </_CardList>
                 ))}
             </ul>
-        </center>
+        </div>
     );
 };
