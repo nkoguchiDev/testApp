@@ -59,7 +59,7 @@ export const HeaderOnLogin = (props) => {
                         >
                             <Avatar
                                 alt={props.user.name ? props.user.name : "?"}
-                                src={props.user.icon ? props.user.icon : "/"}
+                                src={`${process.env.PUBLIC_URL}/icon.png`}
                             />
                         </IconButton>
                         <Menu
@@ -77,8 +77,8 @@ export const HeaderOnLogin = (props) => {
                             open={Boolean(anchorEl)}
                             onClose={handleClose}
                         >
-                            <MenuItem onClick={handleClose}>Profile</MenuItem>
-                            <MenuItem onClick={handleClose}>My account</MenuItem>
+                            <MenuItem onClick={handleClose}>Account</MenuItem>
+                            <MenuItem onClick={handleClose}>Logout</MenuItem>
                         </Menu>
                     </div>
                 </Toolbar>
