@@ -8,6 +8,7 @@ export const createMessage = (content) => {
             headers: {
                 "Content-Type": "application/json",
             },
+            withCredentials: true,
         }
     );
 };
