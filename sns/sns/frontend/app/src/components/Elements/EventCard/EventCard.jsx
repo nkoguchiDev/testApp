@@ -1,5 +1,7 @@
 import * as React from "react";
+import * as ReactDOM from "react-dom";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import Card from "@mui/material/Card";
@@ -19,70 +21,70 @@ import { getMessageList } from "./../../../features/messages/api/getMessageList"
 
 const CardList = styled.li`
     display: block;
+    margin: 5px;
 `;
 
 export const EventCard = (props) => {
+    const navigate = useNavigate();
+    const [events, setEvents] = React.useState([{ content: "josakda" }]);
+
     useEffect(() => {
         return () => {
-            setMessagesToCards(props.user, props.events);
+            setMessagesToCards();
         };
     });
 
-    const setMessagesToCards = (user, events) => {
-        getMessageList().then(
-            (result) => {
-                const element = document.getElementById("events");
-                for (let e in events) {
-                    const card = (
-                        <CardList>
-                            <Card sx={{ maxWidth: 345 }}>
-                                <CardHeader
-                                    avatar={
-                                        <Avatar
-                                            alt="message post user name"
-                                            src={`${process.env.PUBLIC_URL}/icon.png`}
-                                        />
-                                    }
-                                    action={
-                                        <IconButton aria-label="settings">
-                                            <MoreVertIcon />
-                                        </IconButton>
-                                    }
-                                    title="message post user name"
-                                    // subheader={e.created}
-                                    subheader="date"
-                                />
-                                <CardContent>
-                                    <Typography variant="body2" color="text.secondary">
-                                        {e.content}
-                                    </Typography>
-                                </CardContent>
-                                <CardActions disableSpacing>
-                                    <IconButton aria-label="add to favorites">
-                                        <FavoriteIcon />
-                                    </IconButton>
-                                    <IconButton aria-label="share">
-                                        <ShareIcon />
-                                    </IconButton>
-                                    <Tooltip title="Delete">
-                                        <IconButton>
-                                            <DeleteIcon />
-                                        </IconButton>
-                                    </Tooltip>
-                                </CardActions>
-                            </Card>
-                        </CardList>
-                    );
-                    element.appendChild(card);
-                }
-            },
-            (error) => alert("error")
+    const setMessagesToCards = () => {
+        return getMessageList().then(
+            (result) => setEvents(result),
+            (error) => navigate("/forbidden")
         );
     };
 
     return (
         <center>
-            <ul id="events" />
+            <ul id="events">
+                {events.map((e, i) => (
+                    <CardList key={i}>
+                        <Card variant="outlined" sx={{ maxWidth: 345 }}>
+                            <CardHeader
+                                avatar={
+                                    <Avatar
+                                        alt="message post user name"
+                                        src={`${process.env.PUBLIC_URL}/icon.png`}
+                                    />
+                                }
+                                action={
+                                    <IconButton aria-label="settings">
+                                        <MoreVertIcon />
+                                    </IconButton>
+                                }
+                                title="message post user name"
+                                // subheader={e.created}
+                                subheader="date"
+                            />
+                            <CardContent>
+                                <Typography variant="body2" color="text.secondary">
+                                    {e.content}
+                                </Typography>
+                            </CardContent>
+                            <CardActions disableSpacing>
+                                <IconButton aria-label="add to favorites">
+                                    <FavoriteIcon />
+                                </IconButton>
+                                <IconButton aria-label="share">
+                                    <ShareIcon />
+                                </IconButton>
+                                <Tooltip title="Delete">
+                                    <IconButton>
+                                        <DeleteIcon />
+                                    </IconButton>
+                                </Tooltip>
+                            </CardActions>
+                        </Card>
+                    </CardList>
+                ))}
+            </ul>
         </center>
     );
 };
