@@ -9,6 +9,26 @@ from app.api import deps
 router = APIRouter()
 
 
+@router.get("/{user_email}", response_model=schemas.UserBase, status_code=200)
+def get_user(user_email: str, current_user: models.User = Depends(
+        deps.get_current_active_user)) -> Any:
+
+    if current_user is None:
+        raise HTTPException(
+            status_code=403,
+            detail="no permission.",
+        )
+
+    if user_email != current_user.email:
+        raise HTTPException(
+            status_code=403,
+            detail="no permission.",
+        )
+
+    user = crud.user.get_by_email(email=user_email)
+    return json.loads(user.to_json())
+
+
 @router.post("", response_model=schemas.UserBase, status_code=201)
 def create_user(user_in: schemas.UserCreate, admin: bool = False) -> Any:
     """
@@ -29,11 +49,11 @@ def create_user(user_in: schemas.UserCreate, admin: bool = False) -> Any:
 
 
 @router.delete("", status_code=204)
-def remove_admin_user(
+def delete_admin_user(
     current_user: models.User = Depends(
         deps.get_current_active_user)) -> Any:
     """
-    Remove admin user.
+    delete admin user.
     """
-    crud.user.remove(uuid=current_user.uuid)
+    crud.user.delete(uuid=current_user.uuid)
     return None
