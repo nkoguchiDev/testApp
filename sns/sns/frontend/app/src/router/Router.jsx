@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 
 import { Home } from "../pages/Home";
-import { UserHome } from "../pages/UserHome";
+import { User } from "../pages/User";
 import { Login } from "../pages/Login";
 import { SignUp } from "../pages/SignUp";
 import { Forbidden } from "../pages/Forbidden";
@@ -16,19 +16,19 @@ export const Router = () => {
                 path="/"
                 element={
                     <>
-                        <Header />
                         <Home />
                     </>
                 }
             />
-            <Route
-                path="/users"
+            {/* <Route
+                path="/users/:id"
                 element={
                     <>
+                        <Header />
                         <UserHome />
                     </>
                 }
-            />
+            /> */}
             <Route
                 path="/login"
                 element={
