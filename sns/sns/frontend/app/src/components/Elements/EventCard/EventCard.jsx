@@ -18,15 +18,16 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Tooltip from "@mui/material/Tooltip";
 
 import { getMessageList } from "./../../../features/messages/api/getMessageList";
+import { deleteMessage } from "../../../features/api/messages";
 
-const _CardList = styled.li`
+const CardList = styled.li`
     display: block;
     margin: 5px;
 `;
 
 export const EventCard = () => {
     const navigate = useNavigate();
-    const [events, setEvents] = React.useState([{ content: "josakda" }]);
+    const [events, setEvents] = React.useState([]);
 
     useEffect(() => {
         return () => {
@@ -40,20 +41,21 @@ export const EventCard = () => {
             (error) => navigate("/forbidden")
         );
     };
+    const deleteEventCard = (id) => {
+        deleteMessage(id);
 
-    const aaa = (event) => {
-        alert(event);
+        window.location.reload();
     };
     return (
         <div>
             <ul id="events">
                 {events.map((e, i) => (
-                    <_CardList id={i} key={i}>
+                    <CardList id={i} key={i}>
                         <Card variant="outlined" sx={{ maxWidth: 350, margin: "auto" }}>
                             <CardHeader
                                 avatar={
                                     <Avatar
-                                        alt="message post user name"
+                                        alt={e.create_user}
                                         src={`${process.env.PUBLIC_URL}/icon.png`}
                                     />
                                 }
@@ -62,8 +64,8 @@ export const EventCard = () => {
                                         <MoreVertIcon />
                                     </IconButton>
                                 }
-                                title="message post user name"
-                                subheader="date"
+                                title={e.create_user}
+                                subheader={e.date}
                             />
                             <CardContent>
                                 <Typography variant="body2" color="text.secondary">
@@ -78,13 +80,15 @@ export const EventCard = () => {
                                     <ShareIcon />
                                 </IconButton>
                                 <Tooltip title="Delete">
-                                    <IconButton id="hi" onClick={aaa.bind(this, i)}>
+                                    <IconButton
+                                        onClick={deleteEventCard.bind(this, e.uuid)}
+                                    >
                                         <DeleteIcon />
                                     </IconButton>
                                 </Tooltip>
                             </CardActions>
                         </Card>
-                    </_CardList>
+                    </CardList>
                 ))}
             </ul>
         </div>
