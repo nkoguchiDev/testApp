@@ -8,11 +8,9 @@ import { createSession } from "/app/src/features/auth/api/createSession";
 export const Login = () => {
     const navigate = useNavigate();
     const loginAccount = () => {
-        createSession(
-            document.getElementById("email").value,
-            document.getElementById("password").value
-        ).then(
-            (result) => navigate("/users"),
+        const email = document.getElementById("email").value;
+        createSession(email, document.getElementById("password").value).then(
+            (result) => navigate("/"),
             (error) => navigate("/forbidden")
         );
     };
