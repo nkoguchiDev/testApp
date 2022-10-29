@@ -56,8 +56,22 @@ stages:
         is_active: True
         is_superuser: True
 
-  - id: remove_admin_user
-    name: remove admin user
+  - id: request_user_information_by_email
+    name: request user information by email
+
+    request:
+      url: http://{host}/api/{version}/users/{email:s}
+      method: GET
+    response:
+      status_code: 200
+      json:
+        email: "{email:s}"
+        display_name: "{display_name:s}"
+        is_active: True
+        is_superuser: True
+
+  - id: delete_admin_user
+    name: delete admin user
 
     request:
       url: http://{host}/api/{version}/me
