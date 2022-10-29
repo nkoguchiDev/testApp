@@ -21,7 +21,7 @@ def delete_my_information(
     current_user: models.User = Depends(
         deps.get_current_active_user)) -> Any:
     """
-    Remove admin user.
+    delete admin user.
     """
-    crud.user.remove(uuid=current_user.uuid)
+    crud.user.delete(uuid=current_user.uuid)
     return None
