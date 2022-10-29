@@ -20,9 +20,11 @@ stages:
   - type: ref
     id: create_session
   - type: ref
+    id: request_user_information_by_email
+  - type: ref
     id: request_user_information
   - type: ref
-    id: remove_admin_user
+    id: delete_admin_user
 
   # message api usage
   - type: ref
@@ -34,4 +36,4 @@ stages:
   - type: ref
     id: request_message_list
   - type: ref
-    id: remove_admin_user
+    id: delete_admin_user
