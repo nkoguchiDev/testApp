@@ -9,7 +9,7 @@ from app.api import deps
 router = APIRouter()
 
 
-@router.get("", status_code=200, response_model=List[schemas.MessageBase])
+@router.get("", status_code=200, response_model=List[schemas.MessageResponse])
 def get_message_list(current_user: models.User = Depends(
         deps.get_current_active_user)) -> Any:
 
@@ -23,7 +23,7 @@ def get_message_list(current_user: models.User = Depends(
     return json.loads(message_list.to_json())
 
 
-@router.post("", status_code=201, response_model=schemas.MessageBase)
+@router.post("", status_code=201, response_model=schemas.MessageResponse)
 def post_message(
     message_in: schemas.MessageCreate,
     current_user: models.User = Depends(
@@ -39,3 +39,16 @@ def post_message(
         content=message_in.content)
     message = crud.message.create(obj_in=message_in, user=current_user)
     return json.loads(message.to_json())
+
+
+@router.delete("/{message_id}", status_code=204)
+def delete_message(message_id, current_user: models.User = Depends(
+        deps.get_current_active_user)) -> Any:
+
+    if current_user is None:
+        raise HTTPException(
+            status_code=403,
+            detail="no permission.",
+        )
+
+    crud.message.delete(uuid=message_id, user=current_user)
