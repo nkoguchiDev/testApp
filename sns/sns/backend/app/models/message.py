@@ -8,6 +8,8 @@ class Message(Document):
     uuid = StringField(unique=True, required=True)
     _type = StringField(default="message")
     content = StringField(required=True)
+    date = StringField(required=True)
+    create_user = StringField(required=True)
     user = ReferenceField(User)
 
     meta = {
