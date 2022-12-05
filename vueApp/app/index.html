@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://unpkg.com/vue@next"></script>
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <title>vueApp</title>
+
+</head>
+
+<body>
+    <script type="module">
+
+        Vue.createApp({
+            data() {
+                return {
+                    titleClass: 'title'
+                }
+            }
+        }).mount('#app')
+    </script>
+
+    <div id="app">
+        <h1 v-bind:class="titleClass">Make me red</h1>
+    </div>
+</body>
+
+</html>
