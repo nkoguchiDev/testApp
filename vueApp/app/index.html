@@ -11,18 +11,71 @@
 
 <body>
     <script type="module">
+        let id = 0
 
         Vue.createApp({
             data() {
                 return {
-                    titleClass: 'title'
+                    titleClass: 'title',
+                    count: 0,
+                    text: "",
+                    awesome: true,
+                    newTodo: '',
+                    hideCompleted: false,
+                    todos: [
+                        { id: id++, text: 'Learn HTML', done: true },
+                        { id: id++, text: 'Learn JavaScript', done: true },
+                        { id: id++, text: 'Learn Vue', done: false }
+                    ]
+                }
+            },
+            methods: {
+                increment() {
+                    this.count++
+                },
+                toggle() {
+                    this.awesome = !this.awesome
+                },
+                addTodo() {
+                    this.todos.push({ id: id++, text: this.newTodo })
+                    this.newTodo = ''
+                },
+                removeTodo(todo) {
+                    this.todos = this.todos.filter((t) => t !== todo)
+                }
+            },
+            computed: {
+                filteredTodos() {
+                    return this.hideCompleted
+                        ? this.todos.filter((t) => !t.done)
+                        : this.todos
                 }
             }
         }).mount('#app')
     </script>
 
     <div id="app">
-        <h1 v-bind:class="titleClass">Make me red</h1>
+        <h1 :class="titleClass">Make me red</h1>
+        <button @click="increment">count is: {{ count }}</button>
+        <input v-model="text">
+        <p>{{ text }}</p>
+        <button @click="toggle">toggle</button>
+        <h1 v-if="awesome">Vue is awesome!</h1>
+        <h1 v-else>Oh no 😢</h1>
+        <form @submit.prevent="addTodo">
+            <input v-model="newTodo">
+            <button>Add Todo</button>
+        </form>
+        <ul>
+            <li v-for="todo in filteredTodos" :key="todo.id">
+                <input type="checkbox" v-model="todo.done">
+                <span :class="{ done: todo.done }">{{ todo.text }}</span>
+                <button @click="removeTodo(todo)">X</button>
+            </li>
+        </ul>
+        <button @click="hideCompleted = !hideCompleted">
+            {{ hideCompleted ? 'Show all' : 'Hide completed' }}
+        </button>
     </div>
 </body>
 
