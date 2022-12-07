@@ -11,6 +11,8 @@
 
 <body>
     <script type="module">
+        import ChildComp from './ChildComp.js'
+
         let id = 0
 
         Vue.createApp({
@@ -28,7 +30,8 @@
                         { id: id++, text: 'Learn Vue', done: false }
                     ],
                     todoId: 1,
-                    todoData: null
+                    todoData: null,
+                    greeting: "hi nkoguchi!"
                 }
             },
             methods: {
@@ -44,13 +47,6 @@
                 },
                 removeTodo(todo) {
                     this.todos = this.todos.filter((t) => t !== todo)
-                }
-            },
-            computed: {
-                filteredTodos() {
-                    return this.hideCompleted
-                        ? this.todos.filter((t) => !t.done)
-                        : this.todos
                 },
                 async fetchData() {
                     this.todoData = null
@@ -58,6 +54,16 @@
                         `https://jsonplaceholder.typicode.com/todos/${this.todoId}`
                     )
                     this.todoData = await res.json()
+                }
+            },
+            components: {
+                ChildComp
+            },
+            computed: {
+                filteredTodos() {
+                    return this.hideCompleted
+                        ? this.todos.filter((t) => !t.done)
+                        : this.todos
                 }
             },
             mounted() {
@@ -99,6 +105,8 @@
         <button @click="todoId++">Fetch next todo</button>
         <p v-if="!todoData">Loading...</p>
         <pre v-else>{{ todoData }}</pre>
+        <child-comp :msg="greeting" @response="(msg) => childMsg = msg" />
+        <p>{{ childMsg }}</p>
     </div>
 </body>
 
