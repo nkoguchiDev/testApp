@@ -12,6 +12,7 @@
 <body>
     <script type="module">
         import ChildComp from './ChildComp.js'
+        import FallbackContent from './FallbackContent.js'
 
         let id = 0
 
@@ -57,7 +58,8 @@
                 }
             },
             components: {
-                ChildComp
+                ChildComp,
+                FallbackContent
             },
             computed: {
                 filteredTodos() {
@@ -105,8 +107,9 @@
         <button @click="todoId++">Fetch next todo</button>
         <p v-if="!todoData">Loading...</p>
         <pre v-else>{{ todoData }}</pre>
-        <child-comp :msg="greeting" @response="(msg) => childMsg = msg" />
-        <p>{{ childMsg }}</p>
+        <!-- <child-comp :msg="greeting" @response="(msg) => childMsg = msg" />
+        <p>{{ childMsg }}</p> -->
+        <fallback-content></fallback-content>
     </div>
 </body>
 
