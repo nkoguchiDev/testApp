@@ -1,8 +1,9 @@
 <template>
   <v-app>
-    <v-main>
-      <HelloWorld />
-    </v-main>
+    <v-app-bar color="primary"
+        density="compact">
+      <v-toolbar-title>Vuetify</v-toolbar-title>
+    </v-app-bar>
   </v-app>
 </template>
 
