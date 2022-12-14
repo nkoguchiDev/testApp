@@ -1,0 +1,8 @@
+# api core paclage
+fastapi
+uvicorn[standard]
+
+# package for modules
+pydantic[email]
+typing
+python-multipart
