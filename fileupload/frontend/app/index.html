@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>文書のタイトル</title>
+</head>
+
+<body>
+    <section>
+        <input type="file" id="fileUpload" />
+        <button id="uploadBtn">upload</button>
+    </section>
+    <script>
+        axsios.defaults.baseURL = "http://localhost:80";
+
+        let file = null;
+
+        document.getElementById("fileUpload").onchange = function ({ target: { files }, }) {
+            file = files[0]
+        };
+
+        document.getElementById("uploadBtn").onclick = function () {
+            if (!file) return;
+
+            let size = 1024 * 1024 * 2; //2MB
+            let fileChunks = [];
+            let index = 0;
+            for (let cur = 0; cur < file.size; cur += size) {
+                fileChunks.push({
+                    hash: index++,
+                    chunk: file.slice(cur, cur + size)
+                });
+            }
+        }
+
+        // 非同期並行処理
+        const uploadFileChunks = async function (list) {
+            if (list.length === 0) {
+                await axsios({
+                    method: "get",
+                    url: "/merge",
+                    params: {
+                        filename: file.name,
+                    },
+                });
+                return;
+            }
+            let pool = [];
+            let max = 3;
+            let finish = 0;
+            let failList = [];
+
+            for (let i = 0; i < list.length; i++) {
+                let item = list[i];
+                let formData = new FormData();
+                formData.append("filename", file.name);
+                formData.append("hash", item.hash);
+                formData.append("chunk", item.chunk);
+
+                //upload task
+
+                let task = axsios()
+            }
+        }
+
+    </script>
+</body>
+
+</html>
