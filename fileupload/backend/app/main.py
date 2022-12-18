@@ -22,6 +22,6 @@ async def file_split_upload(file: bytes = File()):
     """
     pathをバイナリファイルとして開きdataを書き込む
     """
-    with open("/app/out/data", 'wb') as fout:
+    with open("/app/out/data", 'ab') as fout:
         fout.write(file)
     return {"file_size": len(file)}
