@@ -43,48 +43,55 @@ document.getElementById("uploadBtn").onclick = async function () {
     }
 
     const data = await file_upload_reservation();
-    console.log(data.id);
 
-    // 非同期並行処理
-    let pool = []; // 並行処理プール
-    let max = 3; // 最大並行処理数
-    let finish = 0; // 送信完了数
-    let failList = []; // 失敗リスト
-    for (let i = 0; i < fileChunks.length; i++) {
-        let item = fileChunks[i];
-        let formData = new FormData();
-        formData.append("filename", file.name);
-        formData.append("hash", item.hash);
-        formData.append("chunk", item.chunk);
-        // アップロードタスク
-        let task = axios({
-            method: "post",
-            url: "/images" + "/" + data.id,
-            data: formData,
-        })
-            .then((data) => {
-                let index = pool.findIndex((t) => t === task);
-                pool.splice(index);
-            })
-            .catch(() => {
-                failList.push(item);
-            })
-            .finally(() => {
-                finish++;
-                // すべてアップロード完了後処理
-                if (finish === fileChunks.length) {
-                    axios({
-                        method: "post",
-                        url: "/images" + "/" + data.id + "/merge",
-                    });
-                }
-                console.log(finish, fileChunks.length);
+    const uploadFileChunks = async function (upload_id, list) {
+        if (list.length === 0) {
+            await axios({
+                method: "post",
+                url: "/images" + "/" + upload_id + "/merge",
             });
-
-        pool.push(task);
-        if (pool.length === max) {
-            // 並行処理最大数超えないように制御
-            await Promise.race(pool);
+            return;
         }
-    }
+        // 非同期並行処理
+        let pool = []; // 並行処理プール
+        let max = 3; // 最大並行処理数
+        let finish = 0; // 送信完了数
+        let failList = []; // 失敗リスト
+        for (let i = 0; i < fileChunks.length; i++) {
+            let item = fileChunks[i];
+            let formData = new FormData();
+            formData.append("filename", file.name);
+            formData.append("hash", item.hash);
+            formData.append("chunk", item.chunk);
+            // アップロードタスク
+            let task = axios({
+                method: "post",
+                url: "/images" + "/" + data.id,
+                data: formData,
+            })
+                .then((data) => {
+                    let index = pool.findIndex((t) => t === task);
+                    pool.splice(index);
+                })
+                .catch(() => {
+                    failList.push(item);
+                })
+                .finally(() => {
+                    finish++;
+                    // すべてアップロード完了後処理
+                    if (finish === fileChunks.length) {
+                        uploadFileChunks(data.id, failList);
+                    }
+                    console.log(finish, fileChunks.length);
+                });
+
+            pool.push(task);
+            if (pool.length === max) {
+                // 並行処理最大数超えないように制御
+                await Promise.race(pool);
+            }
+        }
+    };
+
+    uploadFileChunks(data.id, fileChunks);
 };
