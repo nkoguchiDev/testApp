@@ -1,4 +1,5 @@
 from fastapi import FastAPI, File, Form, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
 
 import os
 import uuid
@@ -6,6 +7,20 @@ import shutil
 import glob
 
 app = FastAPI()
+
+# Set all CORS enabled origins
+
+BACKEND_CORS_ORIGINS = ["http://localhost:3000", "http://127.0.0.1:5500"]
+
+if BACKEND_CORS_ORIGINS:
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=[
+            str(origin) for origin in BACKEND_CORS_ORIGINS],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
 
 @app.on_event("startup")
