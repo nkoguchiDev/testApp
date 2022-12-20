@@ -3,6 +3,7 @@
 
 <head>
     <title>文書のタイトル</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
 </head>
 
 <body>
@@ -10,87 +11,7 @@
         <input type="file" id="fileUpload" />
         <button id="uploadBtn">upload</button>
     </section>
-    <script>
-        // axios使う
-        axios.defaults.baseURL = "http://localhost:80";
-
-        let file = null;
-
-        document.getElementById("fileUpload").onchange = function ({
-            target: { files },
-        }) {
-            file = files[0];
-        };
-        // upload
-        document.getElementById("uploadBtn").onclick = function () {
-            if (!file) return;
-            // スライスプール作成
-            let size = 1024 * 1024 * 2; // スライスサイズ設定 2MB
-            let fileChunks = [];
-            let index = 0; // index値
-            for (let cur = 0; cur < file.size; cur += size) {
-                fileChunks.push({
-                    hash: index++,
-                    chunk: file.slice(cur, cur + size),
-                });
-            }
-            // 非同期並行処理
-            const uploadFileChunks = async function (list) {
-                if (list.length === 0) {
-                    await axios({
-                        method: "get",
-                        url: "/merge",
-                        params: {
-                            filename: file.name,
-                        },
-                    });
-                    return;
-                }
-                let pool = []; // 並行処理プール
-                let max = 3; // 最大並行処理数
-                let finish = 0; // 送信完了数
-                let failList = []; // 失敗リスト
-
-                for (let i = 0; i < list.length; i++) {
-                    let item = list[i];
-                    let formData = new FormData();
-                    formData.append("filename", file.name);
-                    formData.append("hash", item.hash);
-                    formData.append("chunk", item.chunk);
-
-                    // アップロードタスク
-                    let task = axios({
-                        method: "post",
-                        url: "/upload",
-                        data: formData,
-                    });
-
-                    task
-                        .then((data) => {
-                            let index = pool.findIndex((t) => t === task);
-                            pool.splice(index);
-                        })
-                        .catch(() => {
-                            failList.push(item);
-                        })
-                        .finally(() => {
-                            finish++;
-                            // すべてアップロード完了後処理
-                            if (finish === list.length) {
-                                uploadFileChunks(failList);
-                            }
-                        });
-                    pool.push(task);
-                    if (pool.length === max) {
-                        // 並行処理最大数超えないように制御
-                        await Promise.race(pool);
-                    }
-                }
-            };
-            uploadFileChunks(fileChunks);
-        };
-
-    </script>
+    <script type="text/javascript" src="fileupload.js"></script>
 </body>
 
 </html>
