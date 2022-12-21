@@ -1,0 +1,14 @@
+# api core paclage
+fastapi
+uvicorn[standard]
+
+# package for modules
+mongoengine
+python-jose[cryptography]
+passlib[bcrypt]
+pydantic[email]
+typing
+
+# test package
+pytest
+tavern
