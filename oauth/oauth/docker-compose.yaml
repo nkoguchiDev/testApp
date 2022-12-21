@@ -36,6 +36,12 @@ services:
     depends_on:
       - mongo # mongoコンテナが起動してから起動させる
     
-
+  redis:
+    image: "redis:latest"
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-databases:/data
 volumes:
   mongo-database:
+  redis-database:
