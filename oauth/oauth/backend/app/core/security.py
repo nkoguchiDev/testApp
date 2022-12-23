@@ -1,3 +1,6 @@
+import uuid
+import base64
+
 from datetime import datetime, timedelta
 from typing import Any, Union
 
@@ -33,5 +36,14 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     return pwd_context.verify(plain_password, hashed_password)
 
 
-def get_password_hash(password: str) -> str:
+def get_hash_string(password: str) -> str:
     return pwd_context.hash(password)
+
+
+def create_access_key() -> str:
+    return base64.b64encode(uuid.uuid4().hex.encode("ascii"))
+
+
+def create_access_secret() -> str:
+    return base64.b64encode(
+        f"{uuid.uuid4().hex}{uuid.uuid4().hex}".encode("ascii"))
