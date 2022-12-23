@@ -5,7 +5,7 @@ from fastapi import APIRouter, HTTPException, Depends
 
 from app import crud, schemas, models
 from app.api import deps
-
+from app.core.security import create_access_key, create_access_secret
 router = APIRouter()
 
 
@@ -57,3 +57,25 @@ def delete_admin_user(
     """
     crud.user.delete(uuid=current_user.uuid)
     return None
+
+
+@router.post("/{user_email}/credentials",
+             response_model=schemas.CredentialBase,
+             status_code=201)
+def create_credential(user_email: str,
+                      is_active: bool = True) -> Any:
+    """
+    Create new credential.
+    """
+    user = crud.user.get_by_email(email=user_email)
+    if user:
+        raise HTTPException(
+            status_code=409,
+            detail="The user with this username already exists in the system.",
+        )
+
+    credential = crud.credential.create(key=create_access_key(),
+                                        secret=create_access_secret(),
+                                        user=user,
+                                        is_active=is_active)
+    return json.loads(credential.to_json())
