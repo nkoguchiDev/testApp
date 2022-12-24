@@ -4,6 +4,7 @@ uvicorn[standard]
 
 # package for modules
 mongoengine
+redis
 python-jose[cryptography]
 passlib[bcrypt]
 pydantic[email]

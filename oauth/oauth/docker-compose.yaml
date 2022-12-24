@@ -7,11 +7,15 @@ services:
     ports:
       - "80:80"
     environment:
+        # DB
         - DB_HOST=mongo
         - DB_PORT=${DB_PORT}
         - DB_USER=${DB_USER}
         - DB_PASSWORD=${DB_PASSWORD}
         - SECRET_KEY=${SECRET_KEY}
+        #cache
+        - CACHE_HOST=redis
+        - CACHE_PORT=${CACHE_PORT}
 
   mongo:
     image: mongo:5.0
@@ -39,7 +43,7 @@ services:
   redis:
     image: "redis:latest"
     ports:
-      - "6379:6379"
+      - "${CACHE_PORT}:${CACHE_PORT}"
     volumes:
       - redis-databases:/data
 
