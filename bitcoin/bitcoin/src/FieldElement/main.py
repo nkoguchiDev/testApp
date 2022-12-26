@@ -16,3 +16,23 @@ class FieldElement:
 
     def __ne__(self, __o: object) -> bool:
         return not (self == __o)
+
+    def __add__(self, __o: object) -> object:
+        if self.prime != __o.prime:
+            raise TypeError("Cannot add two numbers in differrent Fields")
+        num = (self.num + __o.num) % self.prime
+        return self.__class__(num, self.prime)
+
+    def __sub__(self, __o: object) -> object:
+        if self.prime != __o.prime:
+            raise TypeError("Cannot subtract two numbers in differrent Fields")
+
+        """
+        self.num and other.num are the actual value
+        self.prime is what we need to mod against
+        pythonにおける整数の割り算の結果は常に負の無限大の方向に丸められる
+        参考<https://rseiub.com/59>
+        """
+        num = (self.num - __o.num) % self.prime
+        # we return an element of the same class
+        return self.__class__(num, self.prime)

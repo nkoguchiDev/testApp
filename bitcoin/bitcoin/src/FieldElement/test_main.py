@@ -1,7 +1,7 @@
 from main import FieldElement
 
 
-def test_main():
+def test_eq():
     a = FieldElement(7, 13)
     b = FieldElement(6, 13)
 
@@ -10,3 +10,27 @@ def test_main():
 
     assert (a != b) is True
     assert (a != a) is False
+
+
+def test_ne():
+    a = FieldElement(7, 13)
+    b = FieldElement(6, 13)
+
+    assert (a != b) is True
+    assert (a != a) is False
+
+
+def test_add():
+    a = FieldElement(7, 13)
+    b = FieldElement(12, 13)
+    c = FieldElement(6, 13)
+
+    assert (a + b) == c
+
+
+def test_sub():
+    a = FieldElement(6, 19)
+    b = FieldElement(13, 19)
+    c = FieldElement(12, 19)
+
+    assert (a - b) == c
