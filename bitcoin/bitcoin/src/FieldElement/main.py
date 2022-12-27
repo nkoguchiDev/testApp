@@ -36,3 +36,15 @@ class FieldElement:
         num = (self.num - __o.num) % self.prime
         # we return an element of the same class
         return self.__class__(num, self.prime)
+
+    def __mul__(self, __o: object) -> object:
+        if self.prime != __o.prime:
+            raise TypeError("Cannot multiply two numbers in differrent Fields")
+
+        num = (self.num * __o.num) % self.prime
+        return self.__class__(num, self.prime)
+
+    def __pow__(self, exponent: int) -> object:
+
+        num = pow(self.num, exponent, self.prime)
+        return self.__class__(num, self.prime)

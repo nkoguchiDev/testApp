@@ -25,7 +25,7 @@ def test_add():
     b = FieldElement(12, 13)
     c = FieldElement(6, 13)
 
-    assert (a + b) == c
+    assert ((a + b) == c) is True
 
 
 def test_sub():
@@ -33,4 +33,17 @@ def test_sub():
     b = FieldElement(13, 19)
     c = FieldElement(12, 19)
 
-    assert (a - b) == c
+    assert ((a - b) == c) is True
+
+
+def test_mul():
+    a = FieldElement(3, 13)
+    b = FieldElement(12, 13)
+    c = FieldElement(10, 13)
+    assert ((a * b) == c) is True
+
+
+def test_pow():
+    a = FieldElement(3, 13)
+    b = FieldElement(1, 13)
+    assert ((a ** 3) == b) is True
