@@ -47,3 +47,7 @@ def create_access_key() -> str:
 def create_access_secret() -> str:
     return base64.b64encode(
         f"{uuid.uuid4().hex}{uuid.uuid4().hex}".encode("ascii"))
+
+
+def create_oauth_token() -> str:
+    return base64.b64encode(uuid.uuid4().hex.encode("ascii"))
