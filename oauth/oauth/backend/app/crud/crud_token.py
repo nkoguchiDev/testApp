@@ -3,7 +3,7 @@ from uuid import uuid4
 
 from app.crud.base import CRUDBase
 from app.models import Token
-from app.schemas.credential import TokenCreate, TokenUpdate
+from app.schemas.token import TokenCreate, TokenUpdate
 from app.core.security import create_oauth_token
 
 
