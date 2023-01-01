@@ -1,8 +1,10 @@
 import pytest
+import redis
 
 from mongoengine import connect, disconnect
 
 from app.core.config import settings
+from app.cache import connection
 
 
 @pytest.fixture(scope='session', autouse=True)
@@ -18,3 +20,8 @@ def scope_session():
     )
     yield
     disconnect(alias='mongodb')
+
+
+@pytest.fixture(scope="session")
+def redis_cache() -> redis:
+    yield connection

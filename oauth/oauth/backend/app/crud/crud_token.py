@@ -1,13 +1,7 @@
-from uuid import uuid4
-
-
-from app.crud.base import CRUDBase
-from app.models import Token
-from app.schemas.token import TokenCreate, TokenUpdate
 from app.core.security import create_oauth_token
 
 
-class CRUDToken(CRUDBase[Token, TokenCreate, TokenUpdate]):
+class CRUDToken:
 
     def get(self, cache, token: str) -> dict:
         return cache.hgetall(token)
@@ -22,4 +16,4 @@ class CRUDToken(CRUDBase[Token, TokenCreate, TokenUpdate]):
         return
 
 
-token = CRUDToken(Token)
+token = CRUDToken()
