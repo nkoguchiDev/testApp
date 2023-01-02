@@ -45,7 +45,7 @@ services:
     ports:
       - "${CACHE_PORT}:${CACHE_PORT}"
     volumes:
-      - redis-databases:/data
+      - redis-database:/data
 
 volumes:
   mongo-database:

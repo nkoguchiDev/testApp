@@ -15,6 +15,7 @@ pytest-asyncio = "*"
 mongoengine = "*"
 uvicorn = {extras = ["standard"], version = "*"}
 tavern = "*"
+redis = "*"
 
 [dev-packages]
 

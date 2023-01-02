@@ -4,7 +4,7 @@ import redis
 from mongoengine import connect, disconnect
 
 from app.core.config import settings
-from app.cache import connection
+from app.cache.session import connection as cache_connection
 
 
 @pytest.fixture(scope='session', autouse=True)
@@ -24,4 +24,4 @@ def scope_session():
 
 @pytest.fixture(scope="session")
 def redis_cache() -> redis:
-    yield connection
+    yield cache_connection
