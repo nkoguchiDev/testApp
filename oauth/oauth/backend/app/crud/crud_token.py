@@ -8,7 +8,8 @@ class CRUDToken:
 
     def create(self, cache, user_id: str) -> str:
         oauth_token = create_oauth_token()
-        cache.hmset(oauth_token, {"user_id": user_id}, ex=60)
+        cache.hmset(oauth_token, {"user_id": user_id})
+        cache.expire(name=oauth_token, time=60)
         return oauth_token
 
     def delete(self, cache, token: str) -> None:
