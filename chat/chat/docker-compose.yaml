@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  generator:
+    image: voicevox/voicevox_engine:cpu-ubuntu20.04-0.13.3
+    platform: linux/amd64
+    ports:
+      - 50021:50021
+    environment:
+      - VV_CPU_NUM_THREADS=4
