@@ -1,0 +1,11 @@
+# api core paclage
+fastapi
+uvicorn[standard]
+
+# package for modules
+mongoengine
+pydantic[email]
+typing
+
+# test package
+pytest
