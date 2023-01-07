@@ -47,3 +47,9 @@ def test_pow():
     a = FieldElement(3, 13)
     b = FieldElement(1, 13)
     assert ((a ** 3) == b) is True
+
+
+def test_pow_01():
+    a = FieldElement(7, 13)
+    b = FieldElement(8, 13)
+    assert (a**(-3) == b) is True
