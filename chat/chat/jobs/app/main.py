@@ -6,3 +6,4 @@ class Settings(BaseSetting):
   db_host: str
   db_port: int
   
+settings = Settings()
