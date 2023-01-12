@@ -1,6 +1,19 @@
 version: "3.8"
 
 services:
+  api:
+    container_name: FastAPI
+    build: ./backend
+    ports:
+      - "80:80"
+    environment:
+        # DB
+        - DB_HOST=mongo
+        - DB_PORT=${DB_PORT}
+        - DB_USER=${DB_USER}
+        - DB_PASSWORD=${DB_PASSWORD}
+        - SECRET_KEY=${SECRET_KEY}
+
   generator:
     image: voicevox/voicevox_engine:cpu-ubuntu20.04-0.13.3
     platform: linux/amd64
