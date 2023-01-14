@@ -36,3 +36,9 @@ class AIChat:
 
         # 応答のテキスト部分を取り出して返す
         return response['choices'][0]['text']
+
+
+if __name__ == "__main__":
+    # AIChat のインスタンスを作成する
+    chatai = AIChat()
+    print(chatai.response("こんにちは"))
