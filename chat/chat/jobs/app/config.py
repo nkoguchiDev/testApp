@@ -19,7 +19,7 @@ class Settings(BaseSettings):
         = f"{voice_api_protocol}://{voice_api_host}:{voice_api_port}/synthesis"
 
     # ai settings
-    gpt_api_key: str = input("openaiのAPIKEYを入力:")
+    gpt_api_key: str
 
 
 settings = Settings()
