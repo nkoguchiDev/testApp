@@ -9,7 +9,7 @@ class Settings(BaseSettings):
 
     # app settings
     voice_api_host: str = "localhost"
-    voice_api_port: int = 80
+    voice_api_port: int = 50021
     voice_api_protocol: str = "http"
 
     voice_query_endpoint: str \
@@ -18,8 +18,10 @@ class Settings(BaseSettings):
     voice_generator_endpoint: str \
         = f"{voice_api_protocol}://{voice_api_host}:{voice_api_port}/synthesis"
 
-    # ai settings
+    chara_name: str = "ZUN"
+    # openai settings
     gpt_api_key: str
+    gpt_ai_engine: str = "text-davinci-003"
 
 
 settings = Settings()
