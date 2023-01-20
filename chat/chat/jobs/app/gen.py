@@ -15,58 +15,54 @@ def generate_voice(text: str):
         params={"speaker": 1},
         json=query.json(),
         headers={"Content-Type": "application/json"})
+
     if not os.path.exists("./app/voice"):
         os.makedirs("./app/voice")
     with open('./app/voice/iojdiwajdwa.wav', 'wb') as f:
         f.write(voice_wav.content)
 
 
+def post_message_to_GTP(prompt: str) -> str:
+    # openai の GPT-3 モデルを使って、応答を生成する
+    created_message = openai.Completion.create(
+        engine=settings.gpt_ai_engine,
+        prompt=prompt,
+        max_tokens=1000,
+        temperature=0.7,  # 生成する応答の多様性
+        frequency_penalty=0.2,
+        presence_penalty=0,
+    )
+
+    return "".join([choice.get("text", "")
+                   for choice in created_message.choices])
+
+
+def get_learning_data() -> str:
+    learning_data = ""
+    with open("./app/history.txt", 'r') as f:
+        learning_data = f.read()
+    return learning_data
+
+
 class AIChat:
     def __init__(self):
         # ※冒頭で作成したopenai の APIキーを設定してください
         openai.api_key = settings.gpt_api_key
-        self.message = ""
+        self.message = get_learning_data()
 
     def learn(self, user_input):
-        with open("./app/history.txt", 'r') as f:
-            self.message = f.read()
-
         prompt = f"{self.message}\nME:{user_input}"
 
-        # openai の GPT-3 モデルを使って、応答を生成する
-        response = openai.Completion.create(
-            engine=settings.gpt_ai_engine,
-            prompt=prompt,
-            max_tokens=1000,
-            temperature=0.7,  # 生成する応答の多様性
-            frequency_penalty=0.2,
-            presence_penalty=0,
-        )
-
-        texts = ''.join([choice['text'] for choice in response.choices])
-        print(texts)
+        texts = post_message_to_GTP(prompt=prompt)
 
         with open("./app/history.txt", 'w') as f:
             f.write(prompt)
             f.write(texts)
 
     def talk(self, user_input: str):
-        with open("./app/history.txt", 'r') as f:
-            self.message = f.read()
-
         prompt = f"{self.message}\nME:{user_input}"
 
-        # openai の GPT-3 モデルを使って、応答を生成する
-        response = openai.Completion.create(
-            engine=settings.gpt_ai_engine,
-            prompt=prompt,
-            max_tokens=1000,
-            temperature=0.7,  # 生成する応答の多様性
-            frequency_penalty=0.2,
-            presence_penalty=0,
-        )
-
-        texts = ''.join([choice['text'] for choice in response.choices])
+        texts = post_message_to_GTP(prompt=prompt)
 
         return texts.replace(f"{settings.chara_name}:", "")
 
