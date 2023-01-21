@@ -1,6 +1,7 @@
 import requests
 import openai
 import os
+import re
 
 from config import settings
 
@@ -20,6 +21,11 @@ def generate_voice(text: str):
         os.makedirs("./app/voice")
     with open('./app/voice/iojdiwajdwa.wav', 'wb') as f:
         f.write(voice_wav.content)
+
+
+def split_message(messages: str) -> list:
+    # 日本語文を一言ごとに分割する
+    return re.split(r"(?<=[。|、|\!|\?])", messages)
 
 
 def post_message_to_GTP(prompt: str) -> str:
