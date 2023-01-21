@@ -79,5 +79,8 @@ if __name__ == "__main__":
     q = ""
     q = input("こんにちは。御用はなんですか？\n")
     text = chatai.talk(q)
-    print(text)
-    generate_voice(text)
+    voice_gen_list = split_message(text)
+    # 下記の処理を非同期で並列処理する
+    for i in voice_gen_list:
+        print(text)
+        generate_voice(text)
