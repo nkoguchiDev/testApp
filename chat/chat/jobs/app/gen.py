@@ -17,8 +17,8 @@ def generate_voice(text: str):
         json=query.json(),
         headers={"Content-Type": "application/json"})
 
-    if not os.path.exists("./app/voice"):
-        os.makedirs("./app/voice")
+    if not os.path.exists(f"{settings.app_base_dir}/voice"):
+        os.makedirs(f"{settings.app_base_dir}/voice")
     with open('./app/voice/iojdiwajdwa.wav', 'wb') as f:
         f.write(voice_wav.content)
 
@@ -45,7 +45,7 @@ def post_message_to_GTP(prompt: str) -> str:
 
 def get_learning_data() -> str:
     learning_data = ""
-    with open("./app/history.txt", 'r') as f:
+    with open(f"{settings.app_base_dir}/history.txt", 'r') as f:
         learning_data = f.read()
     return learning_data
 
@@ -61,7 +61,7 @@ class AIChat:
 
         texts = post_message_to_GTP(prompt=prompt)
 
-        with open("./app/history.txt", 'w') as f:
+        with open(f"{settings.app_base_dir}/history.txt", 'w') as f:
             f.write(prompt)
             f.write(texts)
 

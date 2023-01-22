@@ -11,6 +11,7 @@ class Settings(BaseSettings):
     voice_api_host: str = "localhost"
     voice_api_port: int = 50021
     voice_api_protocol: str = "http"
+    app_base_dir: str = "app"
 
     voice_query_endpoint: str \
         = f"{voice_api_protocol}://{voice_api_host}:{voice_api_port}/audio_query"
