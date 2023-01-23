@@ -2,11 +2,12 @@ import requests
 import openai
 import os
 import re
+import ray
 
 from config import settings
 
 
-def generate_voice(text: str):
+def generate_voice(text: str, file_name: str):
     query = requests.post(
         url=settings.voice_query_endpoint,
         params={"speaker": 1, "text": text})
@@ -19,7 +20,7 @@ def generate_voice(text: str):
 
     if not os.path.exists(f"{settings.app_base_dir}/voice"):
         os.makedirs(f"{settings.app_base_dir}/voice")
-    with open('./app/voice/iojdiwajdwa.wav', 'wb') as f:
+    with open(f"{settings.app_base_dir}/voice/{file_name}.wav", "wb") as f:
         f.write(voice_wav.content)
 
 
@@ -79,8 +80,10 @@ if __name__ == "__main__":
     q = ""
     q = input("こんにちは。御用はなんですか？\n")
     text = chatai.talk(q)
+    print(text)
     voice_gen_list = split_message(text)
     # 下記の処理を非同期で並列処理する
+    # -> rayを使用して分散並列処理を行う
     for i in voice_gen_list:
-        print(text)
+        ray.init(num_cpus=4)
         generate_voice(text)
