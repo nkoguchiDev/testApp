@@ -2,3 +2,6 @@ pydantic
 requests
 openai
 ray
+
+hypothesis
+pytest
