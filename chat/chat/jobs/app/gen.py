@@ -7,7 +7,8 @@ import ray
 from config import settings
 
 
-def generate_voice(text: str, file_name: str):
+@ray.remote
+def generate_voice(text: str, file_name: str) -> None:
     query = requests.post(
         url=settings.voice_query_endpoint,
         params={"speaker": 1, "text": text})
@@ -66,7 +67,7 @@ class AIChat:
             f.write(prompt)
             f.write(texts)
 
-    def talk(self, user_input: str):
+    def talk(self, user_input: str) -> str:
         prompt = f"{self.message}\nME:{user_input}"
 
         texts = post_message_to_GTP(prompt=prompt)
@@ -81,9 +82,10 @@ if __name__ == "__main__":
     q = input("こんにちは。御用はなんですか？\n")
     text = chatai.talk(q)
     print(text)
-    voice_gen_list = split_message(text)
+
     # 下記の処理を非同期で並列処理する
     # -> rayを使用して分散並列処理を行う
-    for i in voice_gen_list:
-        ray.init(num_cpus=4)
-        generate_voice(text)
+    voice_list = iter(split_message(text))
+    ray.init(num_cpus=2)
+    for i, j in zip(voice_list, voice_list):
+        generate_voice.remote(i), generate_voice.remote(j)
