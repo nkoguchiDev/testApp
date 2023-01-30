@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 flet = "==0.3.2"
+sympy = "*"
 
 [dev-packages]
 

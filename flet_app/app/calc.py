@@ -1,55 +1,55 @@
 import string
 
-from sympy import Symbol
+from sympy import Symbol, sieve
 from sympy.ntheory import factorint
 
 
-def main():
-    calc = Calc(2, "x")
-    print(calc.product)
+def add(a, b) -> str:
+    if isinstance(a, str):
+        a = Symbol(a)
+
+    if isinstance(b, str):
+        b = Symbol(b)
+    return a + b
 
 
-class Calc:
-    def __init__(self, x, y) -> None:
-        if isinstance(x, str):
-            self.x = Symbol(x)
-        else:
-            self.x = x
+def sub(a, b) -> str:
+    if isinstance(a, str):
+        a = Symbol(a)
 
-        if isinstance(y, str):
-            self.y = Symbol(y)
-        else:
-            self.y = y
+    if isinstance(b, str):
+        b = Symbol(b)
+    return a - b
 
-    @property
-    def sum(self):
-        return self.x + self.y
 
-    @property
-    def diff(self):
-        return self.x - self.y
+def mul(a, b) -> str:
+    if isinstance(a, str):
+        a = Symbol(a)
 
-    @property
-    def product(self):
-        return self.x * self.y
+    if isinstance(b, str):
+        b = Symbol(b)
+    return a * b
 
-    @property
-    def quotient(self):
-        return self.x / self.y
+
+def div(a, b) -> str:
+    if isinstance(a, str):
+        a = Symbol(a)
+
+    if isinstance(b, str):
+        b = Symbol(b)
+    return a / b
 
 
 def is_prime_number(n: int) -> bool:
-    if n in [0, 1]:
-        return False
-
-    if len(factorint(n)) == 1:
-        return True
-    else:
-        return False
+    return n in sieve
 
 
 def prime_factorize(n: int) -> dict:
     return factorint(n)
+
+
+def main():
+    print(is_prime_number(7))
 
 
 if __name__ == "__main__":
