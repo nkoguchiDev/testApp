@@ -4,40 +4,33 @@ from sympy import Symbol, sieve
 from sympy.ntheory import factorint
 
 
-def add(a, b) -> str:
-    if isinstance(a, str):
-        a = Symbol(a)
+class Calc:
+    def __init__(self, a, b) -> None:
+        if isinstance(a, str):
+            self.a = Symbol(a)
+        else:
+            self.a = a
 
-    if isinstance(b, str):
-        b = Symbol(b)
-    return a + b
+        if isinstance(b, str):
+            self.b = Symbol(b)
+        else:
+            self.b = b
 
+    @property
+    def add(self):
+        return self.a + self.b
 
-def sub(a, b) -> str:
-    if isinstance(a, str):
-        a = Symbol(a)
+    @property
+    def sub(self):
+        return self.a - self.b
 
-    if isinstance(b, str):
-        b = Symbol(b)
-    return a - b
+    @property
+    def mul(self):
+        return self.a * self.b
 
-
-def mul(a, b) -> str:
-    if isinstance(a, str):
-        a = Symbol(a)
-
-    if isinstance(b, str):
-        b = Symbol(b)
-    return a * b
-
-
-def div(a, b) -> str:
-    if isinstance(a, str):
-        a = Symbol(a)
-
-    if isinstance(b, str):
-        b = Symbol(b)
-    return a / b
+    @property
+    def div(self):
+        return self.a / self.b
 
 
 def is_prime_number(n: int) -> bool:

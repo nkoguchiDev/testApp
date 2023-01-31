@@ -11,6 +11,8 @@ from flet import (
     colors,
 )
 
+from calc import Calc
+
 
 class CalculatorApp(UserControl):
     def build(self):
@@ -174,6 +176,42 @@ class CalculatorApp(UserControl):
                     Row(
                         controls=[
                             ElevatedButton(
+                                text="x",
+                                bgcolor=colors.WHITE24,
+                                color=colors.WHITE,
+                                expand=1,
+                                on_click=self.button_clicked,
+                                data="x",
+                            ),
+                            ElevatedButton(
+                                text="y",
+                                bgcolor=colors.WHITE24,
+                                color=colors.WHITE,
+                                expand=1,
+                                on_click=self.button_clicked,
+                                data="y",
+                            ),
+                            ElevatedButton(
+                                text="z",
+                                bgcolor=colors.WHITE24,
+                                color=colors.WHITE,
+                                expand=1,
+                                on_click=self.button_clicked,
+                                data="z",
+                            ),
+                            ElevatedButton(
+                                text="^",
+                                bgcolor=colors.ORANGE,
+                                color=colors.WHITE,
+                                expand=1,
+                                on_click=self.button_clicked,
+                                data="^",
+                            ),
+                        ]
+                    ),
+                    Row(
+                        controls=[
+                            ElevatedButton(
                                 text="0",
                                 bgcolor=colors.WHITE24,
                                 color=colors.WHITE,
@@ -209,7 +247,7 @@ class CalculatorApp(UserControl):
             self.result.value = "0"
             self.reset()
 
-        elif data in ("1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "."):
+        elif data in ("1", "2", "3", "4", "5", "6", "7", "8", "9", "0", ".", "x", "y", "z"):
             if self.result.value == "0" or self.new_operand:
                 self.result.value = data
                 self.new_operand = False
@@ -218,18 +256,18 @@ class CalculatorApp(UserControl):
 
         elif data in ("+", "-", "*", "/"):
             self.result.value = self.calculate(
-                self.operand1, float(self.result.value), self.operator
+                self.operand1, self.result.value, self.operator
             )
             self.operator = data
             if self.result.value == "Error":
                 self.operand1 = "0"
             else:
-                self.operand1 = float(self.result.value)
+                self.operand1 = self.result.value
             self.new_operand = True
 
         elif data in ("="):
             self.result.value = self.calculate(
-                self.operand1, float(self.result.value), self.operator
+                self.operand1, self.result.value, self.operator
             )
             self.reset()
 
@@ -257,19 +295,19 @@ class CalculatorApp(UserControl):
     def calculate(self, operand1, operand2, operator):
 
         if operator == "+":
-            return self.format_number(operand1 + operand2)
+            return self.format_number(Calc(operand1, operand2).add)
 
         elif operator == "-":
-            return self.format_number(operand1 - operand2)
+            return self.format_number(Calc(operand1, operand2).sub)
 
         elif operator == "*":
-            return self.format_number(operand1 * operand2)
+            return self.format_number(Calc(operand1, operand2).mul)
 
         elif operator == "/":
             if operand2 == 0:
                 return "Error"
             else:
-                return self.format_number(operand1 / operand2)
+                return self.format_number(Calc(operand1, operand2).div)
 
     def reset(self):
         self.operator = "+"
