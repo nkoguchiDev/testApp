@@ -254,7 +254,7 @@ class CalculatorApp(UserControl):
             else:
                 self.result.value = self.result.value + data
 
-        elif data in ("+", "-", "*", "/"):
+        elif data in ("+", "-", "*", "/", "^"):
             self.result.value = self.calculate(
                 self.operand1, self.result.value, self.operator
             )
@@ -308,6 +308,9 @@ class CalculatorApp(UserControl):
                 return "Error"
             else:
                 return self.format_number(Calc(operand1, operand2).div)
+
+        elif operator == "^":
+            return self.format_number(Calc(operand1, operand2).pow)
 
     def reset(self):
         self.operator = "+"
