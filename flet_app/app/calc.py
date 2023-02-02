@@ -5,39 +5,6 @@ from sympy.ntheory import factorint
 
 
 class Calc:
-    def __init__(self, a, b) -> None:
-        if isinstance(a, str):
-            self.a = Symbol(a)
-        else:
-            self.a = a
-
-        if isinstance(b, str):
-            self.b = Symbol(b)
-        else:
-            self.b = b
-
-    @property
-    def add(self):
-        return self.a + self.b
-
-    @property
-    def sub(self):
-        return self.a - self.b
-
-    @property
-    def mul(self):
-        return self.a * self.b
-
-    @property
-    def div(self):
-        return self.a / self.b
-
-    @property
-    def pow(self):
-        return self.a ** self.b
-
-
-class Calcv2:
     def __init__(self) -> None:
         self.result = 0
 
@@ -84,7 +51,7 @@ def prime_factorize(n: int) -> dict:
 
 
 def main():
-    c = Calcv2()
+    c = Calc()
     c.add("x")
     c.add(2)
     c.mul(2)
