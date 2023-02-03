@@ -5,23 +5,23 @@ from sympy.ntheory import factorint
 
 
 class Calc:
-    def __init__(self) -> None:
-        self.result = 0
+    def __init__(self, inputs: list) -> None:
+        self.calc_src = inputs
 
-    def add(self, input):
-        self.result += self._check_input_type(input)
+    def _add(self, operand1, operand2):
+        return check_value(operand1) + check_value(operand2)
 
-    def sub(self, input):
-        self.result -= self._check_input_type(input)
+    def _sub(self, operand1, operand2):
+        return check_value(operand1) - check_value(operand2)
 
-    def mul(self, input):
-        self.result *= self._check_input_type(input)
+    def _mul(self, operand1, operand2):
+        return check_value(operand1) * check_value(operand2)
 
-    def div(self, input):
-        self.result /= self._check_input_type(input)
+    def _div(self, operand1, operand2):
+        return check_value(operand1) / check_value(operand2)
 
-    def pow(self, input):
-        self.result **= self._check_input_type(input)
+    def _pow(self, operand1, operand2):
+        return check_value(operand1) ** check_value(operand2)
 
     @property
     def expand(self):
@@ -31,15 +31,70 @@ class Calc:
     def factor(self):
         return factor(self.result)
 
+    @property
+    def result(self):
+        # merge int value
+        operand1 = ""
+        operand2 = ""
+        operator = None
+        for value in self.calc_src:
+            if value in ("1",
+                         "2",
+                         "3",
+                         "4",
+                         "5",
+                         "6",
+                         "7",
+                         "8",
+                         "9",
+                         "0",
+                         ".",
+                         "x",
+                         "y",
+                         "z"):
+                if operator is None:
+                    operand1 += value
+                    continue
+                else:
+                    operand2 += value
+                    continue
+            elif value in ("+", "-", "*", "/", "^"):
+                if operator is None:
+                    operator = value
+                    continue
+                if operand2 == "":
+                    operator = value
+                    continue
+                else:
+                    operand1 = ""
+                    operand2 = ""
+                    operator = None
+                    if operator == "+":
+                        operand1 = self._add(operand1, operand2)
+
+                    elif operator == "-":
+                        operand1 = self._sub(operand1, operand2)
+
+                    elif operator == "*":
+                        operand1 = self._mul(operand1, operand2)
+
+                    elif operator == "/":
+                        operand1 = self._div(operand1, operand2)
+
+                    elif operator == "^":
+                        operand1 = self._pow(operand1, operand2)
+        return operand1
+
     def reset(self):
         self.result = 0
 
-    def _check_input_type(self, value):
-        if isinstance(value, str):
-            return Symbol(value)
-        if isinstance(value, int):
-            return float(value)
-        raise TypeError("support type is str or int")
+
+def check_value(value):
+    if isinstance(value, str):
+        return Symbol(value)
+    if isinstance(value, int):
+        return float(value)
+    raise TypeError("support type is str or int")
 
 
 def is_prime_number(n: int) -> bool:
@@ -51,11 +106,7 @@ def prime_factorize(n: int) -> dict:
 
 
 def main():
-    c = Calc()
-    c.add("x")
-    c.add(2)
-    c.mul(2)
-    print(c.expand)
+    print(Symbol("1") + Symbol("1"))
 
 
 if __name__ == "__main__":
