@@ -53,10 +53,10 @@ class Calc:
                          "y",
                          "z"):
                 if operator is None:
-                    operand1 += value
+                    operand1 = f"{operand1}{value}"
                     continue
                 else:
-                    operand2 += value
+                    operand2 = f"{operand2}{value}"
                     continue
             elif value in ("+", "-", "*", "/", "^"):
                 if operator is None:
@@ -66,24 +66,31 @@ class Calc:
                     operator = value
                     continue
                 else:
-                    operand1 = ""
+                    operand1 = self.condition(
+                        int(operand1), int(operand2), operator)
                     operand2 = ""
-                    operator = None
-                    if operator == "+":
-                        operand1 = self._add(operand1, operand2)
-
-                    elif operator == "-":
-                        operand1 = self._sub(operand1, operand2)
-
-                    elif operator == "*":
-                        operand1 = self._mul(operand1, operand2)
-
-                    elif operator == "/":
-                        operand1 = self._div(operand1, operand2)
-
-                    elif operator == "^":
-                        operand1 = self._pow(operand1, operand2)
+                    operator = value
+        operand1 = self.condition(int(operand1), int(operand2), operator)
         return operand1
+
+    def condition(self, operand1, operand2, operator):
+        print(operand1, operand2, operator)
+        result = None
+        if operator == "+":
+            result = self._add(operand1, operand2)
+
+        elif operator == "-":
+            result = self._sub(operand1, operand2)
+
+        elif operator == "*":
+            result = self._mul(operand1, operand2)
+
+        elif operator == "/":
+            result = self._div(operand1, operand2)
+
+        elif operator == "^":
+            result = self._pow(operand1, operand2)
+        return str(result)
 
     def reset(self):
         self.result = 0
@@ -93,7 +100,7 @@ def check_value(value):
     if isinstance(value, str):
         return Symbol(value)
     if isinstance(value, int):
-        return float(value)
+        return int(value)
     raise TypeError("support type is str or int")
 
 
