@@ -16,4 +16,4 @@ def test02():
 def test03():
     calc_src = ["x", "+", "2", "*", "3"]
     c = Calc(calc_src)
-    assert c.result == "3*(x+2)"
+    assert c.expand == "3*(x+2)"

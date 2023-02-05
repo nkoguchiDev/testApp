@@ -147,7 +147,8 @@ def prime_factorize(n: int) -> dict:
 
 
 def main():
-    print(Symbol("x+2") * 3)
+    print(Symbol("(2*x)") * 3)
+    print(expand(Symbol("(2*x)") * 3))
 
 
 if __name__ == "__main__":
