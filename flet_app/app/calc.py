@@ -52,29 +52,63 @@ class Calc:
                          "x",
                          "y",
                          "z"):
+
                 if operator is None:
+                    """example value="1"
+                    operand1    operator    operand2
+                    "x" or ""   None        ""
+                    "x1" or "1" None        ""
+                    """
                     operand1 = f"{operand1}{value}"
                     continue
+
                 else:
+                    """example value="1"
+                    operand1    operator    operand2
+                    "x"         "+"         "x" or ""
+                    "x"         "+"         "x1" or "1"
+                    """
                     operand2 = f"{operand2}{value}"
                     continue
             elif value in ("+", "-", "*", "/", "^"):
                 if operator is None:
+                    """example value="-"
+                    operand1    operator    operand2
+                    "x"         None        ""
+                    "x"         "-"        ""
+                    """
                     operator = value
                     continue
                 if operand2 == "":
+                    """example value="-"
+                    operand1    operator    operand2
+                    "x"         "+"         ""
+                    "x"         "-"         ""
+                    """
                     operator = value
                     continue
                 else:
-                    operand1 = self.condition(
-                        int(operand1), int(operand2), operator)
+                    """example value="-"
+                    operand1    operator    operand2
+                    "x"         "+"         "x"
+                    "x+x"       "-"         ""
+                    """
+                    operand1 = self.condition(operand1, operand2, operator)
                     operand2 = ""
                     operator = value
-        operand1 = self.condition(int(operand1), int(operand2), operator)
+        operand1 = self.condition(operand1, operand2, operator)
         return operand1
 
-    def condition(self, operand1, operand2, operator):
+    def condition(self, operand1: str, operand2: str, operator: str):
         print(operand1, operand2, operator)
+        try:
+            operand1 = int(operand1)
+        except ValueError:
+            operand1 = operand1
+        try:
+            operand2 = int(operand2)
+        except ValueError:
+            operand2 = operand2
         result = None
         if operator == "+":
             result = self._add(operand1, operand2)
@@ -113,7 +147,7 @@ def prime_factorize(n: int) -> dict:
 
 
 def main():
-    print(Symbol("1") + Symbol("1"))
+    print(Symbol("x+2") * 3)
 
 
 if __name__ == "__main__":
